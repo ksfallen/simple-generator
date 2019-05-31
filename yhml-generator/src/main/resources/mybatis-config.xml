@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <properties resource="config.properties"/>
+
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="lazyLoadingEnabled" value="false"/>
+        <setting name="aggressiveLazyLoading" value="true"/>
+        <setting name="logImpl" value="SLF4J"/>
+    </settings>
+
+    <typeAliases>
+        <package name="tf56.lf.lfFin.model.domain"/>
+    </typeAliases>
+
+    <environments default="mysql">
+     <!--  
+     JDBC：使用JDBC的提交和回滚设置，依赖从数据源获取的连接来管理事务范围
+     MANAGED：让容器（如Spring）来管理事务的生命周期。默认情况会关闭连接，
+     若不想关闭连接需配置：<property name="closeConnection" value="false"/>
+	 UNPOOLED：连接用完就关闭，不放到连接池, POOLED：连接用完则放在连接池
+	 -->
+        <environment id="oracle">
+            <transactionManager type="MANAGED" />
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="oracle.jdbc.driver.OracleDriver" />
+                <property name="url" value="jdbc:oracle:thin:@192.168.1.217:1521/orcl" />
+                <property name="username" value="invs_sec" />
+                <property name="password" value="htsec" />
+            </dataSource>
+        </environment>
+        
+        <environment id="mysql">
+            <transactionManager type="JDBC" />
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="${db.driver}" />
+                <property name="url" value="${db.url}" />
+                <property name="username" value="${db.username}" />
+                <property name="password" value="${db.password}" />
+            </dataSource>
+        </environment>
+
+        <environment id="postgre">
+            <transactionManager type="JDBC" />
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="org.postgresql.Driver" />
+                <property name="url" value="jdbc:postgresql://localhost:5432/audio" />
+                <property name="username" value="postgres" />
+                <property name="password" value="admin" />
+            </dataSource>
+        </environment>
+        
+        <environment id="dev">
+            <transactionManager type="JDBC" />
+            <dataSource type="UNPOOLED">
+                <!--
+                <property name="driver" value="net.sourceforge.jtds.jdbc.Driver"/>
+                <property name="url" value="jdbc:jtds:sqlserver://192.168.1.211:1433/master"/>
+                <property name="username" value="sa"/>
+                <property name="password" value="jj"/>
+                <property name="driver" value="org.hsqldb.jdbcDriver" />
+                <property name="url" value="jdbc:hsqldb:mem:basetest" />
+                <property name="username" value="sa" />
+                -->
+            </dataSource>
+        </environment>
+        
+    </environments>
+
+    <mappers>
+        <mapper resource="mapper/BillMapper.xml"/>
+    </mappers>
+
+</configuration>

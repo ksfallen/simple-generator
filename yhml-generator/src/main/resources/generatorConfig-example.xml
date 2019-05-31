@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="gbk"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "mybatis-generator-config_1_0.dtd">
+
+<!-- 带 exmaple 的 xml -->
+<generatorConfiguration>
+    <properties resource="config.properties"/>
+
+    <context id="app" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <!-- 默认双引号 ",  Mysql 表名关键字 反单引号
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+         -->
+
+        <property name="javaFileEncoding" value="utf-8"/>
+
+        <!-- 代码路径 -->
+        <plugin type="com.simple.generator.plugin.ProjectPathPlugin">
+            <property name="packageName" value="${package.name}"/>
+        </plugin>
+
+        <plugin type="com.simple.generator.plugin.mapper.MapperGeneratorPlugin">
+            <property name="mappers" value="${mapper.rootClass}"/>
+            <property name="caseSensitive" value="true"/>
+        </plugin>
+
+        <!-- service 类-->
+        <plugin type="com.simple.generator.plugin.service.ServicePlugin">
+            <property name="packageName" value="${package.name}"/>
+            <property name="rootClass" value="${service.rootClass}"/>
+            <property name="enableAnnotation" value="true"/>
+        </plugin>
+
+        <plugin type="com.simple.generator.plugin.model.ModelPlugin" />
+
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+
+        <!-- 分表代码生成插件 -->
+        <!-- <plugin type="com.test.generator.plugin.SplitTablePlugin"></plugin> -->
+
+        <!-- 此处是将Example改名为Criteria 当然 想改成什么都行~
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$" />
+            <property name="replaceString" value="Criteria" />
+            <property name="replaceString" value="Query" />
+        </plugin>
+         -->
+
+        <!-- 此处是将UserMapper.xml改名为UserDao.xml 当然 想改成什么都行~
+        <plugin type="org.mybatis.generator.plugins.rename.RenameSqlMapperPlugin">
+            <property name="searchString" value="Mapper" />
+            <property name="replaceString" value="Dao" />
+        </plugin>
+        -->
+
+        <!-- 此处是将UserMapper改名为UserDao 接口 当然 想改成什么都行~  -->
+        <!--
+        <plugin type="org.mybatis.generator.plugins.rename.RenameJavaMapperPlugin">
+            <property name="searchString" value="Mapper$" />
+            <property name="replaceString" value="Dao" />
+        </plugin>
+        -->
+
+        <!-- 注释生成 -->
+        <commentGenerator type="com.simple.generator.plugin.model.CommentGenerator">
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库连接 -->
+        <jdbcConnection driverClass="${db.driver}" connectionURL="${db.url}" userId="${db.username}" password="${db.password}">
+            <property name="remarksReporting" value="true"/>
+        </jdbcConnection>
+
+        <!-- java类型处理器 -->
+        <javaTypeResolver type="com.simple.generator.plugin.model.JavaTypeResolver"/>
+
+        <!-- 生成实体类 -->
+        <javaModelGenerator targetPackage="${package.model}" targetProject="${file.directory}">
+            <property name="enableSubPackages" value="false"/>
+            <!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+            <property name="trimStrings" value="true"/>
+            <property name="rootClass" value="${model.rootClass}"/>
+        </javaModelGenerator>
+
+        <!-- 生成XML文件 -->
+        <sqlMapGenerator targetPackage="${package.xml}" targetProject="${file.directory}">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!--生成Dao文件 XMLMAPPER-->
+        <javaClientGenerator targetPackage="${package.mapper}" targetProject="${file.directory}" type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+
+        <table tableName="%" >
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+    </context>
+</generatorConfiguration>

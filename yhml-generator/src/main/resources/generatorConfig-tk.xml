@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="gbk"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="app" targetRuntime="com.simple.generator.tk.SimpleTkMyBatis3Impl" defaultModelType="flat">
+
+        <property name="javaFileEncoding" value="utf-8"/>
+
+        <!-- 代码路径 -->
+        <plugin type="com.simple.generator.plugin.ProjectPathPlugin"/>
+
+        <!-- service 类-->
+        <plugin type="com.simple.generator.plugin.service.ServicePlugin"/>
+        <plugin type="com.simple.generator.plugin.model.ModelPlugin"/>
+
+        <!-- TkBaseMapperGeneratorPlug simpleMapperGeneratorPluginugin -->
+        <plugin type="com.simple.generator.plugin.TkGeneratorPlugin">
+            <property name="mappers" value="com.simple.common.base.BaseMapper"/>
+            <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
+            <property name="caseSensitive" value="true"/>
+        </plugin>
+
+        <!-- 数据库连接 -->
+        <jdbcConnection driverClass="" connectionURL=""/>
+
+        <!-- java类型处理器 -->
+        <javaTypeResolver type="com.simple.generator.plugin.model.JavaTypeResolver"/>
+
+        <!-- 生成实体类 -->
+        <javaModelGenerator targetPackage="model" targetProject="">
+            <property name="enableSubPackages" value="false"/>
+        </javaModelGenerator>
+
+        <!-- 生成XML文件 -->
+        <sqlMapGenerator targetPackage="xml" targetProject="">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!--生成Dao文件 XMLMAPPER-->
+        <javaClientGenerator targetPackage="dao" targetProject="" type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+
+        <!-- 主键自增的情况
+            DB2: VALUES IDENTITY_VAL_LOCAL()
+            MYSQL: SELECT LAST_INSERT_ID()
+            SQLSERVER: SELECT SCOPE_IDENTITY()
+            CLOUDSCAPE: VALUES IDENTITY_VAL_LOCAL()
+            DERBY: VALUES IDENTITY_VAL_LOCAL()
+            HSQLDB: CALL IDENTITY()
+            SYBASE: SELECT @@IDENTITY
+            DB2_MF: SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1
+            INFORMIX: select dbinfo('sqlca.sqlerrd1') from systables where tabid=1
+         -->
+
+        <!--
+            对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等
+            identity="true  @GeneratedValue(strategy = GenerationType.IDENTITY)
+        -->
+        <!--
+            如果设置为true，生成的model类会直接使用column本身的名字，不再使用驼峰命名方法，
+            比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate
+         -->
+        <!--<table tableName="%">
+            <property name="useActualColumnNames" value="true"/>
+            &lt;!&ndash; {0}:tableName {1}: TableName &ndash;&gt;
+            <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>
+        </table>-->
+
+        <table tableName="AppInfo">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+    </context>
+</generatorConfiguration>

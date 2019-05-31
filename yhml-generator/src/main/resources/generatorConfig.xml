@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--<properties resource="config.properties"/>-->
+
+    <context id="app" targetRuntime="com.simple.generator.xml.thin.IntrospectedTableThinImpl" defaultModelType="flat">
+
+        <property name="javaFileEncoding" value="utf-8"/>
+
+        <!-- 代码路径 -->
+        <plugin type="com.simple.generator.plugin.ProjectPathPlugin"/>
+        <plugin type="com.simple.generator.plugin.model.ModelPlugin"/>
+        <plugin type="com.simple.generator.plugin.mapper.MapperGeneratorPlugin"/>
+        <plugin type="com.simple.generator.plugin.service.ServicePlugin"/>
+        <plugin type="com.simple.generator.plugin.controller.ControllerPlugin"/>
+
+        <!--<plugin type="com.simple.generator.plugin.DtoPlugin" />-->
+        <!--<plugin type="com.simple.generator.plugin.DicEnumPlugin"/>-->
+
+        <!-- 注释生成 -->
+        <commentGenerator type="com.simple.generator.plugin.model.CommentGenerator">
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库连接 -->
+        <!--<connectionFactory type="com.simple.generator.conn.JdbcConnectionFactory"/>-->
+        <jdbcConnection driverClass="" connectionURL=""/>
+
+        <!-- java类型处理器 -->
+        <javaTypeResolver type="com.simple.generator.plugin.model.JavaTypeResolver"/>
+
+        <!-- 生成实体类 -->
+        <javaModelGenerator targetPackage="entity" targetProject=""/>
+
+        <!-- 生成XML文件 -->
+        <sqlMapGenerator targetPackage="xml" targetProject=""/>
+
+        <!--生成Dao文件 -->
+        <javaClientGenerator targetPackage="dao" targetProject="" type="com.simple.generator.plugin.mapper.ThinJavaMapperGenerator"/>
+
+        <!--
+            对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等
+            useActualColumnNames = "true" 生成的model类会直接使用column本身的名字，
+            identity="true  @GeneratedValue(strategy = GenerationType.IDENTITY)
+        -->
+        <!-- {0}:tableName {1}: TableName -->
+        <!--<table tableName="UserInfo">-->
+        <!--    <property name="useActualColumnNames" value="true"/>-->
+        <!--    <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="AppInfo">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table tableName="op_app_page">
+            <property name="useActualColumnNames" value="false"/>
+            <!--<generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>-->
+            <!--<columnRenamingRule searchString="^c" replaceString=""/>-->
+            <domainObjectRenamingRule searchString="^op" replaceString=""/>
+
+        </table>
+
+        <!--<table tableName="AppConfig">-->
+        <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--<generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="SysPermission">-->
+        <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--<generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="SysRole">-->
+        <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--<generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+    </context>
+</generatorConfiguration>
