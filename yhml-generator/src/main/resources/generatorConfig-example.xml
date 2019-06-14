@@ -17,7 +17,7 @@
         <property name="javaFileEncoding" value="utf-8"/>
 
         <!-- ´úÂëÂ·¾¶ -->
-        <plugin type="com.simple.generator.plugin.ProjectPathPlugin">
+        <plugin type="com.simple.generator.plugin.codegen.ProjectPathPlugin">
             <property name="packageName" value="${package.name}"/>
         </plugin>
 
@@ -27,13 +27,13 @@
         </plugin>
 
         <!-- service Àà-->
-        <plugin type="com.simple.generator.plugin.service.ServicePlugin">
+        <plugin type="com.simple.generator.plugin.codegen.ServicePlugin">
             <property name="packageName" value="${package.name}"/>
             <property name="rootClass" value="${service.rootClass}"/>
             <property name="enableAnnotation" value="true"/>
         </plugin>
 
-        <plugin type="com.simple.generator.plugin.model.ModelPlugin" />
+        <plugin type="com.simple.generator.plugin.model.EntityPlugin" />
 
         <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
 

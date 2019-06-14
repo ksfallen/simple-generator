@@ -3,7 +3,7 @@
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <!-- 设置日志输出格式 -->
-            <pattern>%-5p %logger{36} [%line] - %m%n</pattern>
+            <pattern>[#] %m%n</pattern>
             <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p %logger{36} [%line] - %m%n</pattern>-->
             <charset>UTF-8</charset>
         </encoder>

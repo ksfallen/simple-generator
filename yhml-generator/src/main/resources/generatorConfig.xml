@@ -9,11 +9,11 @@
         <property name="javaFileEncoding" value="utf-8"/>
 
         <!-- 代码路径 -->
-        <plugin type="com.simple.generator.plugin.ProjectPathPlugin"/>
-        <plugin type="com.simple.generator.plugin.model.ModelPlugin"/>
+        <!--<plugin type="com.simple.generator.plugin.codegen.ProjectPathPlugin"/>-->
+        <plugin type="com.simple.generator.plugin.model.EntityPlugin"/>
         <plugin type="com.simple.generator.plugin.mapper.MapperGeneratorPlugin"/>
-        <plugin type="com.simple.generator.plugin.service.ServicePlugin"/>
-        <plugin type="com.simple.generator.plugin.controller.ControllerPlugin"/>
+        <plugin type="com.simple.generator.plugin.codegen.ServicePlugin"/>
+        <plugin type="com.simple.generator.plugin.codegen.ControllerPlugin"/>
 
         <!--<plugin type="com.simple.generator.plugin.DtoPlugin" />-->
         <!--<plugin type="com.simple.generator.plugin.DicEnumPlugin"/>-->
@@ -50,18 +50,27 @@
         <!--    <property name="useActualColumnNames" value="true"/>-->
         <!--    <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table tableName="AppInfo">
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>
-        </table>
 
-        <table tableName="op_app_page">
+        <!--<table tableName="AppInfo">-->
+        <!--    <property name="useActualColumnNames" value="true"/>-->
+        <!--    <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+        <table tableName="op_shop%">
             <property name="useActualColumnNames" value="false"/>
-            <!--<generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>-->
-            <!--<columnRenamingRule searchString="^c" replaceString=""/>-->
             <domainObjectRenamingRule searchString="^op" replaceString=""/>
-
         </table>
+        <table tableName="op_site%">
+            <property name="useActualColumnNames" value="false"/>
+            <domainObjectRenamingRule searchString="^op" replaceString=""/>
+        </table>
+
+        <!--<table tableName="t%">-->
+        <!--    <property name="useActualColumnNames" value="false"/>-->
+        <!--    <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>-->
+            <!--<domainObjectRenamingRule searchString="t" replaceString=""/>-->
+            <!--<columnRenamingRule searchString="^c" replaceString=""/>-->
+        <!--</table>-->
 
         <!--<table tableName="AppConfig">-->
         <!--<property name="useActualColumnNames" value="true"/>-->

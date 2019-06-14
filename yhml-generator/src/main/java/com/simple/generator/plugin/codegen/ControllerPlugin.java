@@ -1,4 +1,4 @@
-package com.simple.generator.plugin.controller;
+package com.simple.generator.plugin.codegen;
 
 import java.util.ArrayList;
 import java.util.List;

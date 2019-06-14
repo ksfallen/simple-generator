@@ -1,4 +1,4 @@
-package com.simple.generator.plugin.model;
+package com.simple.generator.tk;
 
 import java.text.MessageFormat;
 

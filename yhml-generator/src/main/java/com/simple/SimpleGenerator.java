@@ -18,29 +18,36 @@ public class SimpleGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        String url ="jdbc:mysql://127.0.0.1:3306/simple?characterEncoding=utf-8&useSSL=false";
         String dirver = "com.mysql.jdbc.Driver";
+        String url ="jdbc:mysql://127.0.0.1:3306/simple?characterEncoding=utf-8&useSSL=false";
         String user = "root";
         String passwd = "root";
 
+        // String url ="jdbc:mysql://172.31.254.147:3306/sit_activity?characterEncoding=UTF-8&tinyInt1isBit=false";
+        // String user = "opfm";
+        // String passwd = "Allcityg0-_";
+
+        String generatorConfigXml = "generatorConfig.xml";
+        // String generatorConfigXml = "generatorConfig-tk.xml";
+        // String generatorConfigXml = "generatorConfig-example.xml";
+
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("code/demo");
+        gc.setOutputDir("code2/demo");
         // gc.setSuperServiceClass("com.simple.generator.base.thin.BaseService");
         // gc.setSuperEntityClass("com.simple.common.base.bean.BaseParamBean");
         // gc.setSuperMapperClass("com.simple.common.base.BaseMapper");
         gc.setSuportServiceInterface(true);
         // gc.setGenericTypeAutowired(true);
         gc.setMapperSuffix("Dao");
+        gc.setSwagger2(true);
+        ContextConfig.setGlobalConfig(gc);
 
         PackageConfig pc = new PackageConfig();
-        pc.setPackageName("com.yhml.demo");
-
-        ContextConfig.setGlobalConfig(gc);
+        // pc.setPackageName("com.yhml.demo");
+        pc.setPackageName("com.citytsm.operationplatform.site");
+        pc.setMapper("com.citytsm.operationplatform.site.dao");
+        pc.setEntity("com.citytsm.operationplatform.site.entity.model");
         ContextConfig.setPackageConfig(pc);
-
-        String generatorConfigXml = "generatorConfig.xml";
-        // String generatorConfigXml = "generatorConfig-tk.xml";
-        // String generatorConfigXml = "generatorConfig-example.xml";
 
         ConfigurationParser cp = new ConfigurationParser();
         Configuration config = cp.parseConfiguration(SimpleGenerator.class.getClassLoader().getResourceAsStream(generatorConfigXml));
@@ -52,10 +59,10 @@ public class SimpleGenerator {
         context.getJdbcConnectionConfiguration().addProperty("remarksReporting", "true");
 
         initContext(gc, pc, context);
+
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config);
         myBatisGenerator.generate(null);
     }
-
 
 
     private static void initContext(GlobalConfig gc, PackageConfig pc, Context context) {

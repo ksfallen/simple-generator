@@ -91,6 +91,7 @@ public class StringTool {
 
     /**
      * 获取 主键字段
+     *
      * @param table
      * @return
      */
@@ -112,6 +113,10 @@ public class StringTool {
         }
 
         return column;
+    }
+
+    public static String format(String text, Object... value) {
+        return MessageFormat.format(text, value);
     }
 
 }

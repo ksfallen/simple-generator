@@ -1,4 +1,7 @@
-package com.simple.generator.plugin;
+package com.simple.generator.tk;
+
+import java.util.List;
+import java.util.Properties;
 
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.InnerClass;
@@ -9,29 +12,32 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.Context;
 
-import com.simple.generator.plugin.model.TkCommentGenerator;
-
 import tk.mybatis.mapper.generator.MapperPlugin;
 
 /**
  * tk 通用 mapper 生成用
  */
-public class TkGeneratorPlugin extends MapperPlugin {
+public class TkMapperGeneratorPlugin extends MapperPlugin {
 
     @Override
     public void setContext(Context context) {
-        // super.setContext(context);
-        this.context = context;
-
-        // this.commentCfg = new CommentGeneratorConfiguration();
-        // this.commentCfg.setConfigurationType(MapperCommentGenerator.class.getCanonicalName());
-        // context.setCommentGeneratorConfiguration(this.commentCfg);
-
-
+        super.setContext(context);
         // 设置默认的注释生成器
         CommentGeneratorConfiguration commentCfg = new CommentGeneratorConfiguration();
         commentCfg.setConfigurationType(TkCommentGenerator.class.getCanonicalName());
         context.setCommentGeneratorConfiguration(commentCfg);
+    }
+
+    @Override
+    public void setProperties(Properties properties) {
+        properties.setProperty("mappers", gc.getSuperMapperClass());
+        properties.setProperty("caseSensitive", "true");
+        super.setProperties(properties);
+    }
+
+    @Override
+    public boolean validate(List<String> warnings) {
+        return super.validate(warnings);
     }
 
     /**

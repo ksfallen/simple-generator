@@ -43,7 +43,7 @@ public class CountMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
-        method.setReturnType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
+        method.setReturnType(new FullyQualifiedJavaType("int")); //$NON-NLS-1$
         method.setName(XmlStatementId.COUNT);
         method.addParameter(new Parameter(fqjt, "record")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);

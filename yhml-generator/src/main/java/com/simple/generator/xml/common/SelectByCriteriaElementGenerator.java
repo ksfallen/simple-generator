@@ -16,7 +16,8 @@ public class SelectByCriteriaElementGenerator extends AbstractXmlElementGenerato
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("select");
         answer.addAttribute(new Attribute("id", LIST_BY_CRITERIA));
-        answer.addAttribute(new Attribute("resultType", this.introspectedTable.getFullyQualifiedTable().getDomainObjectName()));
+        // answer.addAttribute(new Attribute("resultType", this.introspectedTable.getFullyQualifiedTable().getDomainObjectName()));
+        answer.addAttribute(new Attribute("resultMap", "BaseResultMap"));
 
         String parameterType = introspectedTable.getBaseRecordType();
 

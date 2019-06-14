@@ -16,25 +16,25 @@
         <property name="javaFileEncoding" value="utf-8"/>
 
         <!-- 代码路径 -->
-        <plugin type="com.simple.generator.plugin.ProjectPathPlugin">
+        <plugin type="com.simple.generator.plugin.codegen.ProjectPathPlugin">
             <property name="packageName" value="${package.name}"/>
         </plugin>
 
         <!-- TkBaseMapperGeneratorPlug simpleMapperGeneratorPluginugin -->
-        <plugin type="com.simple.generator.plugin.TkGeneratorPlugin">
+        <plugin type="com.simple.generator.tk.TkMapperGeneratorPlugin">
             <property name="mappers" value="com.simple.common.base.BaseMapper"/>
             <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
             <property name="caseSensitive" value="true"/>
         </plugin>
 
         <!-- service 类-->
-        <plugin type="com.simple.generator.plugin.service.ServicePlugin">
+        <plugin type="com.simple.generator.plugin.codegen.ServicePlugin">
             <property name="packageName" value="${package.name}"/>
             <property name="rootClass" value="${service.rootClass}"/>
             <property name="enableAnnotation" value="true"/>
         </plugin>
 
-        <plugin type="com.simple.generator.plugin.model.ModelPlugin" />
+        <plugin type="com.simple.generator.plugin.model.EntityPlugin" />
 
         <!-- 分表代码生成插件 -->
         <!-- <plugin type="com.test.generator.plugin.SplitTablePlugin"></plugin> -->
