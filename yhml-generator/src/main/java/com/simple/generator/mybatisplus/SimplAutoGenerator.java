@@ -35,9 +35,7 @@ public class SimplAutoGenerator extends AutoGenerator {
 
         if (null == this.config) {
             this.config = new ConfigBuilder(super.getPackageInfo(), getDataSource(), getStrategy(), getTemplate(), getGlobalConfig());
-            if (null != this.injectionConfig) {
-                this.injectionConfig.setConfig(this.config);
-            }
+            this.injectionConfig.setConfig(this.config);
 
         }
 
@@ -47,6 +45,7 @@ public class SimplAutoGenerator extends AutoGenerator {
         }
 
         templateEngine.init(this.pretreatmentConfigBuilder(this.config)).mkdirs().batchOutput().open();
+
         log.info("==========================文件生成完成！！！==========================");
     }
 
@@ -57,6 +56,11 @@ public class SimplAutoGenerator extends AutoGenerator {
     }
 
     private ConfigBuilder afterPretreatmentConfigBuilder(ConfigBuilder config) {
+        if (config.getTableInfoList() == null) {
+            return config;
+        }
+
+        // 删除import 包
         for (TableInfo info : config.getTableInfoList()) {
             info.getImportPackages().removeIf(next -> next.startsWith("com.baomidou.mybatisplus.annotation"));
         }
@@ -69,6 +73,9 @@ public class SimplAutoGenerator extends AutoGenerator {
         return this;
     }
 
+    /**
+     * 数据库表前缀 模糊匹配
+     */
     private void afterStrategyConfig() {
         AutoGenerator generator = this;
 

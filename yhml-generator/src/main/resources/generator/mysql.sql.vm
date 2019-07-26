@@ -1,0 +1,26 @@
+/*
+ Source Server Type    : MySQL
+ Source Server Version : 50723
+ Source Schema         : ${schema}
+
+ Date: ${date}
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+#foreach($table in ${tables})
+-- ----------------------------
+-- Table structure for `${table.name}`
+-- ----------------------------
+drop table if exists `${table.name}`;
+create table `${table.name}` (
+#foreach($col in ${table.columns})
+  ${col.name}  ${col.sqlType} #if(${col.primaryKey}) not null auto_increment #end  comment '${col.comment}',
+#end
+#if(${table.primaryKey})
+  primary key (#foreach($col in ${table.primaryKey.columns})`${col.name}`#end)
+#end
+) engine=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8  comment='${table.comment}';
+
+#end

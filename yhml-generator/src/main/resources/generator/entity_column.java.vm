@@ -1,0 +1,9 @@
+package ${package.Entity}.query;
+
+public interface ${entity}Field {
+## ----------  BEGIN 字段循环遍历  ----------
+#foreach($field in ${table.fields})
+    String ${field.propertyName} = "${field.name}";
+#end
+## ----------  END 字段循环遍历  ----------
+}

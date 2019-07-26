@@ -56,13 +56,9 @@
         <!--    <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
 
-        <table tableName="op_shop%">
+        <table tableName="op_freebus_task_coupons">
             <property name="useActualColumnNames" value="false"/>
-            <domainObjectRenamingRule searchString="^op" replaceString=""/>
-        </table>
-        <table tableName="op_site%">
-            <property name="useActualColumnNames" value="false"/>
-            <domainObjectRenamingRule searchString="^op" replaceString=""/>
+            <domainObjectRenamingRule searchString="^op_freebus" replaceString=""/>
         </table>
 
         <!--<table tableName="t%">-->

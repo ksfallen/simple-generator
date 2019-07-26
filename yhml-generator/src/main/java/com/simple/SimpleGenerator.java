@@ -19,13 +19,13 @@ public class SimpleGenerator {
 
     public static void main(String[] args) throws Exception {
         String dirver = "com.mysql.jdbc.Driver";
-        String url ="jdbc:mysql://127.0.0.1:3306/simple?characterEncoding=utf-8&useSSL=false";
-        String user = "root";
-        String passwd = "root";
+        // String url ="jdbc:mysql://127.0.0.1:3306/simple?characterEncoding=utf-8&useSSL=false";
+        // String user = "root";
+        // String passwd = "root";
 
-        // String url ="jdbc:mysql://172.31.254.147:3306/sit_activity?characterEncoding=UTF-8&tinyInt1isBit=false";
-        // String user = "opfm";
-        // String passwd = "Allcityg0-_";
+        String url ="jdbc:mysql://172.31.254.147:3306/sit_free_bus?characterEncoding=UTF-8&tinyInt1isBit=false";
+        String user = "opfm";
+        String passwd = "Allcityg0-_";
 
         String generatorConfigXml = "generatorConfig.xml";
         // String generatorConfigXml = "generatorConfig-tk.xml";
@@ -45,8 +45,8 @@ public class SimpleGenerator {
         PackageConfig pc = new PackageConfig();
         // pc.setPackageName("com.yhml.demo");
         pc.setPackageName("com.citytsm.operationplatform.site");
-        pc.setMapper("com.citytsm.operationplatform.site.dao");
-        pc.setEntity("com.citytsm.operationplatform.site.entity.model");
+        pc.setMapper("com.citytsm.op.freebus.dao");
+        pc.setEntity("com.citytsm.op.freebus.entity.model");
         ContextConfig.setPackageConfig(pc);
 
         ConfigurationParser cp = new ConfigurationParser();

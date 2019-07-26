@@ -1,0 +1,11 @@
+package ${package.Entity}.query;
+
+import ${package.Entity}.${entity};
+
+@SuppressWarnings("serial")
+public class ${entity}Query implements Q${entity}Field extends ${entity} {
+
+    public static ${entity}Query create() {
+        return new ${entity}Query();
+    }
+}

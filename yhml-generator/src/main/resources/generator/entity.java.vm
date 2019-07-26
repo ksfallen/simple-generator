@@ -16,17 +16,15 @@ import io.swagger.annotations.ApiModelProperty;
 
 #if(${entityLombokModel})
 import lombok.*;
-## import lombok.AllArgsConstructor;
-## import lombok.Builder;
-## import lombok.Data;
-## import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 #end
 
 #if(${entityLombokModel})
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+## @Builder
+## @NoArgsConstructor
+## @AllArgsConstructor
 @Data
+@Accessors(chain = true)
 #if(${activeRecord})
 @EqualsAndHashCode(callSuper = true)
 #end

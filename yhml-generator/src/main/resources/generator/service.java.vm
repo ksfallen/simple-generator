@@ -1,22 +1,72 @@
-package ${package.ServiceImpl};
+package ${package.Service};
 
-import ${package.Entity}.${entity};
-import ${package.Mapper}.${table.mapperName};
- import ${superServiceImplClassPackage};
-## import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
+import com.baomidou.mybatisplus.core.conditions.AbstractWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import ${superServiceImplClassPackage};
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
 
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 #if(${kotlin})
-open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+open class ${table.serviceName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
 
 }
 #else
-public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}>{
+public class ${table.serviceName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}>{
+    @Autowired
+    private ${table.mapperName} mapper;
 
+    public List<${entity}> listBy(${entity}Query query){
+        QueryWrapper<${entity}> wrapper = query(query);
+        return super.list(wrapper);
+    }
+
+    public <${entity}> getOne(${entity}Query query){
+        QueryWrapper<${entity}> wrapper = query(query);
+        return super.getOne(wrapper);
+    }
+
+    private QueryWrapper<${entity}> query(${entity}Query query) {
+        QueryWrapper<${entity}> wrapper = new QueryWrapper<>();
+        initWarpper(wrapper, query);
+        return wrapper;
+    }
+
+    private UpdateWrapper<${entity}> update(${entity}Query query) {
+        UpdateWrapper<${entity}> wrapper = new UpdateWrapper();
+        initWarpper(wrapper, query);
+        return wrapper;
+    }
+
+    /**
+     * #foreach($field in ${table.fields})${field.name},#end
+     */
+    private void initWarpper(AbstractWrapper wrapper, ${entity} query){
+    #foreach($field in ${table.fields})
+        #if(${field.propertyType.equals("boolean")})
+            #set($getprefix="is")
+        #else
+            #set($getprefix="get")
+        #end
+
+        #if(${field.propertyType} == "String")
+        if (StringUtils.isNotBlank(query.${getprefix}${field.capitalName}())) {
+            wrapper.eq("${field.name}", query.${getprefix}${field.capitalName}());
+        }
+         #else
+        if (query.${getprefix}${field.capitalName}() != null) {
+            wrapper.eq("${field.name}", query.${getprefix}${field.capitalName}());
+        }
+        #end
+    #end
+    }
 }
 #end
