@@ -11,7 +11,9 @@ import org.springframework.util.Assert;
 
 import com.simple.generator.util.StringTool;
 
-
+/**
+ * mybatis Generator
+ */
 public class SimpleGenerator {
 
     public static MyBatisGenerator myBatisGenerator;

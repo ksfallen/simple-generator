@@ -18,6 +18,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * mybatis plus Generator
+ */
 public class SimplePlusGenerator {
     protected Logger log = LoggerFactory.getLogger(this.getClass());
 
