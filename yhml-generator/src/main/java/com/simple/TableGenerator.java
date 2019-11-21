@@ -90,8 +90,23 @@ public class TableGenerator extends SimplePlusGenerator {
                     table.setPrimaryKey(ppk);
                 }
 
+                String typeName = field.getType().getTypeName();
+
+                // 字符串默认值
+                if ("java.lang.String".equals(typeName)) {
+                    column.setDefaultValue("''");
+                }
+
+                if ("java.util.Date".equals(typeName) && column.getName().contains("create")) {
+                    column.setDefaultValue("current_timestamp");
+                }
+
+                if ("java.util.Date".equals(typeName) && column.getName().contains("update")) {
+                    column.setDefaultValue("current_timestamp on update current_timestamp");
+                }
+
                 SimpleValue simpleValue = new SimpleValue(SimpleTableExporter.metadata, table);
-                simpleValue.setTypeName(field.getType().getTypeName());
+                simpleValue.setTypeName(typeName);
                 simpleValue.addColumn(column);
 
                 applyFiledComment(cc, field, column);
@@ -125,6 +140,11 @@ public class TableGenerator extends SimplePlusGenerator {
         return table;
     }
 
+    /**
+     * 表注释
+     * @param cc
+     * @param table
+     */
     private void applyTableComment(Class cc, Table table) {
         if (docMap.containsKey(cc.getName())) {
             ClassDoc doc = docMap.get(cc.getName());
@@ -133,6 +153,12 @@ public class TableGenerator extends SimplePlusGenerator {
         }
     }
 
+    /**
+     * 字段注释
+     * @param cc
+     * @param field
+     * @param column
+     */
     private void applyFiledComment(Class cc, Field field, Column column) {
         if (docMap.containsKey(cc.getName())) {
             ClassDoc doc = docMap.get(cc.getName());

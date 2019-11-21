@@ -1,25 +1,22 @@
 package com.simple;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.simple.generator.mybatisplus.JavaTypeConvert;
+import com.simple.generator.mybatisplus.SimplAutoGenerator;
+import com.simple.generator.mybatisplus.SimplInjectionConfig;
+import com.simple.generator.mybatisplus.SimpleFileOutConfig;
 import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.FileSystemUtils;
 
-import com.baomidou.mybatisplus.annotation.DbType;
-import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.*;
-import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
-import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
-import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
-import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.simple.generator.mybatisplus.SimplAutoGenerator;
-import com.simple.generator.mybatisplus.SimplInjectionConfig;
-import com.simple.generator.mybatisplus.SimpleFileOutConfig;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SimplePlusGenerator {
     protected Logger log = LoggerFactory.getLogger(this.getClass());
@@ -74,7 +71,7 @@ public class SimplePlusGenerator {
 
         GlobalConfig gc = new GlobalConfig();
         gc.setOutputDir(outputDir);
-        gc.setFileOverride(true); //FIXME true不是很合理，应该有一种merge操作
+        gc.setFileOverride(true);
         gc.setActiveRecord(true);// 不需要ActiveRecord特性的请改为false
         gc.setEnableCache(false);// XML 二级缓存
         gc.setBaseResultMap(true);// XML ResultMap
@@ -152,7 +149,7 @@ public class SimplePlusGenerator {
         ds.setUsername(userName);
         ds.setPassword(password);
         ds.setDriverName(driverName);
-        ds.setTypeConvert(new TypeConvert());
+        ds.setTypeConvert(new JavaTypeConvert());
         ds.setDbType(DbType.MYSQL);
         mpg.setDataSource(ds);
         return ds;
@@ -191,24 +188,5 @@ public class SimplePlusGenerator {
         focList.add(SimpleFileOutConfig.entityQuery(packageName, outputDir, entityPackage + ".query"));
         focList.add(SimpleFileOutConfig.entityColumn(packageName, outputDir, entityPackage + ".query"));
         return cfg;
-    }
-
-
-    /**
-     * 自定义数据库Java类型转换
-     */
-    private class TypeConvert extends MySqlTypeConvert {
-        @Override
-        public IColumnType processTypeConvert(GlobalConfig gc, String fieldType) {
-            String t = fieldType.toLowerCase();
-
-            if (t.contains("date") || t.contains("time") || t.contains("year")) {
-                DbColumnType date = DbColumnType.DATE;
-                log.info("转换类型：{} -> {}", t, date);
-                return date;
-            }
-
-            return super.processTypeConvert(gc, fieldType);
-        }
     }
 }

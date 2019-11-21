@@ -15,21 +15,17 @@
  */
 package org.mybatis.generator.internal.util;
 
-import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.java.*;
+import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.config.TableConfiguration;
 
 import java.util.Locale;
 import java.util.Properties;
 
-import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.config.TableConfiguration;
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 
 /**
  * @author Jeff Butler
@@ -43,7 +39,7 @@ public class JavaBeansUtil {
     /**
      * Computes a getter method name.  Warning - does not check to see that the property is a valid
      * property.  Call getValidPropertyName first.
-     * 
+     *
      * @param property
      *            the property
      * @param fullyQualifiedJavaType
@@ -136,18 +132,18 @@ public class JavaBeansUtil {
 
     /**
      * This method ensures that the specified input string is a valid Java property name.
-     * 
+     *
      * <p>The rules are as follows:
-     * 
+     *
      * <ol>
      *   <li>If the first character is lower case, then OK</li>
      *   <li>If the first two characters are upper case, then OK</li>
      *   <li>If the first character is upper case, and the second character is lower case, then the first character should be made
      *       lower case</li>
      * </ol>
-     * 
+     *
      * <p>For example:
-     * 
+     *
      * <ul>
      *   <li>eMail &gt; eMail</li>
      *   <li>firstName &gt; firstName</li>

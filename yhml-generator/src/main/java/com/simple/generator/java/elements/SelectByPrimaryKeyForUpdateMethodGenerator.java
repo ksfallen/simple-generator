@@ -25,7 +25,7 @@ public class SelectByPrimaryKeyForUpdateMethodGenerator extends AbstractJavaMapp
     @Override
     public void addInterfaceElements(Interface interfaze) {
         String hasSplitTable = introspectedTable.getTableConfigurationProperty("hasSplitTable");
-        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
 

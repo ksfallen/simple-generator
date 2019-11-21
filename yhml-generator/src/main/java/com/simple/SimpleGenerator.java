@@ -27,6 +27,10 @@ public class SimpleGenerator {
         String user = "opfm";
         String passwd = "Allcityg0-_";
 
+        url ="jdbc:mysql://10.0.0.103:3306/metro_settlement?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false";
+        user = "tdw";
+        passwd = "happy";
+
         String generatorConfigXml = "generatorConfig.xml";
         // String generatorConfigXml = "generatorConfig-tk.xml";
         // String generatorConfigXml = "generatorConfig-example.xml";

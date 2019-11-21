@@ -4,9 +4,7 @@ import java.util.Iterator;
 
 import org.hibernate.dialect.Dialect;
 import org.hibernate.mapping.Column;
-import org.hibernate.mapping.Constraint;
 import org.hibernate.mapping.Table;
-import org.hibernate.mapping.UniqueKey;
 import org.hibernate.tool.schema.internal.StandardTableExporter;
 
 import com.yhml.core.util.StringUtil;
@@ -68,16 +66,16 @@ public class SimpleTableExporter extends StandardTableExporter {
                 buf.append(col.isNullable() ? dialect.getNullColumnString() : " not null");
             }
 
-            if (col.isUnique()) {
-                String keyName = Constraint.generateName("UK_", table, col);
-                UniqueKey uk = table.getOrCreateUniqueKey(keyName);
-                uk.addColumn(col);
-                buf.append(dialect.getUniqueDelegate().getColumnDefinitionUniquenessFragment(col));
-            }
-
-            if (col.getCheckConstraint() != null && dialect.supportsColumnCheck()) {
-                buf.append(" check (").append(col.getCheckConstraint()).append(")");
-            }
+            // if (col.isUnique()) {
+            //     String keyName = Constraint.generateName("UK_", table, col);
+            //     UniqueKey uk = table.getOrCreateUniqueKey(keyName);
+            //     uk.addColumn(col);
+            //     buf.append(dialect.getUniqueDelegate().getColumnDefinitionUniquenessFragment(col));
+            // }
+            //
+            // if (col.getCheckConstraint() != null && dialect.supportsColumnCheck()) {
+            //     buf.append(" check (").append(col.getCheckConstraint()).append(")");
+            // }
 
             if (StringUtil.hasText(col.getComment())) {
                 buf.append(dialect.getColumnComment(col.getComment()));

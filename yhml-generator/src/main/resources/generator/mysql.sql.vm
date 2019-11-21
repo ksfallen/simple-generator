@@ -16,7 +16,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 drop table if exists `${table.name}`;
 create table `${table.name}` (
 #foreach($col in ${table.columns})
-  ${col.name}  ${col.sqlType} #if(${col.primaryKey}) not null auto_increment #end  comment '${col.comment}',
+  ${col.name}  ${col.sqlType} ##
+  #if(${col.primaryKey}) not null auto_increment#end
+  #if(${col.defaultValue}) default ${col.defaultValue} #end
+  comment '${col.comment}',
 #end
 #if(${table.primaryKey})
   primary key (#foreach($col in ${table.primaryKey.columns})`${col.name}`#end)

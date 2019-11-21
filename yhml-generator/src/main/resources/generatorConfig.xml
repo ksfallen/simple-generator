@@ -56,9 +56,9 @@
         <!--    <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
 
-        <table tableName="op_freebus_task_coupons">
+        <table tableName="dwd_channel_order">
             <property name="useActualColumnNames" value="false"/>
-            <domainObjectRenamingRule searchString="^op_freebus" replaceString=""/>
+            <!--<domainObjectRenamingRule searchString="^op_freebus" replaceString=""/>-->
         </table>
 
         <!--<table tableName="t%">-->
