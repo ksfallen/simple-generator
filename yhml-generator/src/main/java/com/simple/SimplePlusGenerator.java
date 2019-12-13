@@ -90,7 +90,10 @@ public class SimplePlusGenerator {
         gc.setServiceImplName("%sServiceImpl");
         gc.setControllerName("%sController");
         // gc.setXmlName("%sMapper");
-        gc.setSwagger2(false); // 实体属性 Swagger2 注解
+        // 实体属性 Swagger2 注解
+        // gc.setSwagger2(false);
+        // 时间戳 默认转 LocalDateTime
+        // gc.setDateType(DateType.TIME_PACK);
         generator.setGlobalConfig(gc);
 
         // 数据源配置
@@ -152,6 +155,7 @@ public class SimplePlusGenerator {
         ds.setUsername(userName);
         ds.setPassword(password);
         ds.setDriverName(driverName);
+        // 类型转换
         ds.setTypeConvert(new JavaTypeConvert());
         ds.setDbType(DbType.MYSQL);
         mpg.setDataSource(ds);
@@ -165,8 +169,9 @@ public class SimplePlusGenerator {
     protected TemplateConfig templateConfig(AutoGenerator generator) {
         TemplateConfig config = new TemplateConfig();
         config.setXml(null);
-        // config.setMapper(null);
-        config.setService(null);
+        config.setMapper(null);
+        config.setMapper("/generator/mapper.java.vm");
+        // config.setService(null);
         config.setService("/generator/service.java.vm");
         config.setServiceImpl(null);
         // config.setServiceImpl("/generator/serviceImpl.java.vm");

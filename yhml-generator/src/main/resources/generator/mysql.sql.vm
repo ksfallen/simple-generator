@@ -1,8 +1,5 @@
 /*
- Source Server Type    : MySQL
- Source Server Version : 50723
  Source Schema         : ${schema}
-
  Date: ${date}
 */
 

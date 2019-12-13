@@ -18,8 +18,12 @@ open class ${table.serviceName} : ${superServiceImplClass}<${table.mapperName}, 
 }
 #else
 public class ${table.serviceName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}>{
+  
+  #foreach($item in ${cfg.mapperName.entrySet()})
+    #if(${item.key} == ${entity})
     @Autowired
-    private ${table.mapperName} mapper;
-    
+    private ${table.mapperName} ${item.value};
+    #end
+  #end
 }
 #end

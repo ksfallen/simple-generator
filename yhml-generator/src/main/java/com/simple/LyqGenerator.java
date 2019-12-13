@@ -1,7 +1,6 @@
 package com.simple;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.simple.generator.mybatisplus.JavaTypeConvert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,7 +27,7 @@ public class LyqGenerator extends SimplePlusGenerator {
 
     @Override
     protected void customGenerator(AutoGenerator generator) {
-        generator.getDataSource().setTypeConvert(new JavaTypeConvert());
+        // generator.getDataSource().setTypeConvert(new JavaTypeConvert());
         generator.getTemplate().setController("/generator/controller.java.vm");
     }
 
