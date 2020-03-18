@@ -1,6 +1,4 @@
-package com.simple.generator.xml.thin;
-
-import java.util.List;
+package com.simple.generator.plugin.xml.thin;
 
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
@@ -10,6 +8,8 @@ import org.mybatis.generator.codegen.mybatis3.model.PrimaryKeyGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.RecordWithBLOBsGenerator;
 import org.mybatis.generator.config.init.ContextConfig;
 import org.mybatis.generator.config.init.GlobalConfig;
+
+import java.util.List;
 
 
 /**
@@ -23,7 +23,6 @@ public class IntrospectedTableThinImpl extends IntrospectedTableMyBatis3Impl {
 
     public IntrospectedTableThinImpl() {
         super();
-
         this.gc = ContextConfig.getGlobalConfig();
     }
 
@@ -72,10 +71,10 @@ public class IntrospectedTableThinImpl extends IntrospectedTableMyBatis3Impl {
 
         setCountByExampleStatementId("countByExample");
         setDeleteByExampleStatementId("deleteByExample");
-        // setDeleteByPrimaryKeyStatementId("deleteByPrimaryKey"); 
+        // setDeleteByPrimaryKeyStatementId("deleteByPrimaryKey");
         setDeleteByPrimaryKeyStatementId("deleteById"); // deleteByPrimaryKey改成delete
         setInsertStatementId("insert");
-        // setInsertSelectiveStatementId("insertSelective"); 
+        // setInsertSelectiveStatementId("insertSelective");
         setInsertSelectiveStatementId("insert"); // insertSelective改成insert
         setSelectAllStatementId("selectAll");
         // setSelectByExampleStatementId("selectByExample");
@@ -85,7 +84,7 @@ public class IntrospectedTableThinImpl extends IntrospectedTableMyBatis3Impl {
         // setUpdateByExampleSelectiveStatementId("updateByExampleSelective");
         // setUpdateByExampleWithBLOBsStatementId("updateByExampleWithBLOBs");
         // setUpdateByPrimaryKeyStatementId("updateByPrimaryKey");
-        // setUpdateByPrimaryKeySelectiveStatementId("updateByPrimaryKeySelective"); 
+        // setUpdateByPrimaryKeySelectiveStatementId("updateByPrimaryKeySelective");
         setUpdateByPrimaryKeySelectiveStatementId("update"); // updateByPrimaryKeySelective改成update
         // setUpdateByPrimaryKeyWithBLOBsStatementId("updateByPrimaryKeyWithBLOBs");
         setBaseResultMapId("BaseResultMap");

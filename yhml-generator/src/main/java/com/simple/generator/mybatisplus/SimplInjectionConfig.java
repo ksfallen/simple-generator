@@ -2,6 +2,7 @@ package com.simple.generator.mybatisplus;
 
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
+import com.google.common.collect.Maps;
 import com.yhml.core.util.StringUtil;
 
 import java.util.HashMap;
@@ -16,13 +17,13 @@ public class SimplInjectionConfig extends InjectionConfig {
 
     @Override
     public void initMap() {
-        Map<String, String> mapperNameMap = new HashMap<>();
-        map.put("mapperName", mapperNameMap);
+        map.put("mapper", Maps.newHashMap());
+        map.put("service", Maps.newHashMap());
 
         ConfigBuilder config = this.getConfig();
         config.getTableInfoList().forEach(info -> {
-            // map.put("entityQuery", info.getEntityName() + "Query");
-            mapperNameMap.put(info.getEntityName(), StringUtil.toLowerCaseFirst(info.getEntityName()) + "Mapper");
+            ((Map) map.get("mapper")).put(info.getEntityName(), StringUtil.toLowerCaseFirst(info.getMapperName()));
+            ((Map) map.get("service")).put(info.getEntityName(), StringUtil.toLowerCaseFirst(info.getServiceName()));
         });
         this.setMap(map);
     }

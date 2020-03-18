@@ -10,6 +10,9 @@ import ${package.Mapper}.${table.mapperName};
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * $!{table.comment} Service
+ */
 @Slf4j
 @Service
 #if(${kotlin})
@@ -18,8 +21,7 @@ open class ${table.serviceName} : ${superServiceImplClass}<${table.mapperName}, 
 }
 #else
 public class ${table.serviceName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}>{
-  
-  #foreach($item in ${cfg.mapperName.entrySet()})
+  #foreach($item in ${cfg.mapper.entrySet()})
     #if(${item.key} == ${entity})
     @Autowired
     private ${table.mapperName} ${item.value};

@@ -1,8 +1,9 @@
 package com.simple.generator.plugin.mapper;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.simple.generator.plugin.mapper.common.CountMethodGenerator;
+import com.simple.generator.plugin.mapper.common.DeleteBatchMethodGenerator;
+import com.simple.generator.plugin.mapper.common.ListMethodGenerator;
+import com.simple.generator.plugin.xml.ThinXMLMapperGenerator;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -14,7 +15,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMa
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 
-import com.simple.generator.xml.ThinXMLMapperGenerator;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
@@ -69,6 +71,7 @@ public class ThinJavaMapperGenerator extends JavaMapperGenerator {
 
         addCountMethod(interfaze);
         addListMethod(interfaze);
+        addDeleteBatchMethod(interfaze);
 
         List<CompilationUnit> answer = new ArrayList<>();
         if (context.getPlugins().clientGenerated(interfaze, null, introspectedTable)) {
@@ -86,6 +89,13 @@ public class ThinJavaMapperGenerator extends JavaMapperGenerator {
     private void addListMethod(Interface interfaze) {
         if (this.introspectedTable.getRules().generateSelectByPrimaryKey()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new ListMethodGenerator();
+            this.initializeAndExecuteGenerator(methodGenerator, interfaze);
+        }
+    }
+
+    private void addDeleteBatchMethod(Interface interfaze) {
+        if (this.introspectedTable.getRules().generateSelectByPrimaryKey()) {
+            AbstractJavaMapperMethodGenerator methodGenerator = new DeleteBatchMethodGenerator();
             this.initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }

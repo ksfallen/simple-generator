@@ -1,4 +1,4 @@
-package com.simple.generator.xml.common;
+package com.simple.generator.plugin.xml.common;
 
 import java.sql.Types;
 

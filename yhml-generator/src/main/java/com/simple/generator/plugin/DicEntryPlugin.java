@@ -1,9 +1,11 @@
 package com.simple.generator.plugin;
 
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import com.simple.generator.util.StringTool;
+import com.yhml.core.util.PinyinUtil;
+import com.yhml.core.util.PropertiesUtil;
+import com.yhml.core.util.StringUtil;
+import com.yhml.core.util.ValidateUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -13,15 +15,11 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.*;
+import org.mybatis.generator.config.init.ContextConfig;
 
-import com.simple.SimpleGenerator;
-import com.simple.generator.util.StringTool;
-import com.yhml.core.util.PinyinUtil;
-import com.yhml.core.util.PropertiesUtil;
-import com.yhml.core.util.StringUtil;
-import com.yhml.core.util.ValidateUtil;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.simple.generator.util.FullyJavaTypeUtil.*;
 
@@ -81,7 +79,7 @@ public class DicEntryPlugin extends PluginAdapter {
                 log.info("Dic: Table = {}, columnName = {}, remark = {}", table, columnName, remark);
                 String str = StringUtil.camelToUnderline(table) + "_" + columnName;
 
-                List<GeneratedJavaFile> list = SimpleGenerator.myBatisGenerator.getGeneratedJavaFiles();
+                List<GeneratedJavaFile> list = ContextConfig.getMyBatisGenerator().getGeneratedJavaFiles();
                 Optional<GeneratedJavaFile> javaFile = list.stream().filter(file -> file.getFileName().equals("DicCons.java")).findFirst();
 
 
@@ -111,7 +109,7 @@ public class DicEntryPlugin extends PluginAdapter {
     }
 
     private GeneratedJavaFile getGeneratedJavaFile() {
-        List<GeneratedJavaFile> list = SimpleGenerator.myBatisGenerator.getGeneratedJavaFiles();
+        List<GeneratedJavaFile> list = ContextConfig.getMyBatisGenerator().getGeneratedJavaFiles();
         Optional<GeneratedJavaFile> javaFile = list.stream().filter(file -> file.getFileName().equals("DicCons")).findFirst();
         return javaFile.orElse(null);
 

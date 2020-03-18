@@ -1,7 +1,7 @@
-package com.simple.generator.java;
+package com.simple.generator.plugin.mapper;
 
-import com.simple.generator.java.elements.SelectByPrimaryKeyForUpdateMethodGenerator;
-import com.simple.generator.xml.EnhancedXMLMapperGenerator;
+import com.simple.generator.plugin.mapper.common.SelectByPrimaryKeyForUpdateMethodGenerator;
+import com.simple.generator.plugin.xml.enhanced.EnhancedXMLMapperGenerator;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;

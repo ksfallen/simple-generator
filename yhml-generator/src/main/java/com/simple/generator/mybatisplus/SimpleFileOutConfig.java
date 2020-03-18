@@ -16,9 +16,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true, fluent = true)
 public class SimpleFileOutConfig extends FileOutConfig {
 
-    private static final String template_entityquery = "/generator/entity_query.java.vm";
     private static final String template_mapper = "/generator/mapper.xml.vm";
-    private static final String entity_column = "/generator/entity_column.java.vm";
+    private static final String template_entity_query = "/generator/entity_query.java.vm";
+    private static final String template_entity_field = "/generator/entity_field.java.vm";
 
     protected String packageName;
     protected String outputDir;
@@ -40,11 +40,11 @@ public class SimpleFileOutConfig extends FileOutConfig {
     }
 
     public static SimpleFileOutConfig entityQuery(String packeageName, String outputDir, String path) {
-        return new SimpleFileOutConfig(template_entityquery, packeageName, outputDir, path).suffix("Query");
+        return new SimpleFileOutConfig(template_entity_query, packeageName, outputDir, path).suffix("Query");
     }
 
     public static SimpleFileOutConfig entityColumn(String packeageName, String outputDir, String path) {
-        return new SimpleFileOutConfig(entity_column, packeageName, outputDir, path).prefx("Q").suffix("Filed");
+        return new SimpleFileOutConfig(template_entity_field, packeageName, outputDir, path).prefx("").suffix("Filed");
     }
 
     public static SimpleFileOutConfig xmlFile(String outputDir) {

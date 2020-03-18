@@ -1,16 +1,15 @@
-package com.simple.generator.xml;
+package com.simple.generator.plugin.xml.enhanced;
 
+import com.simple.generator.plugin.xml.common.SelectByPrimaryKeyForUpdateElementGenerator;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 
-import com.simple.generator.xml.enhanced.SelectByPrimaryKeyForUpdateElementGenerator;
-
+/**
+ * 已经废弃
+ */
+@Deprecated
 public class EnhancedXMLMapperGenerator extends XMLMapperGenerator {
-
-	public EnhancedXMLMapperGenerator() {
-		super();
-	}
 
 	@Override
 	protected XmlElement getSqlMapElement() {

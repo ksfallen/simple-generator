@@ -1,21 +1,18 @@
-package com.simple.generator.xml.common;
+package com.simple.generator.plugin.xml.common;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.simple.generator.util.StringTool;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 import org.mybatis.generator.config.GeneratedKey;
-import org.mybatis.generator.internal.util.StringUtility;
 
-import com.simple.generator.util.StringTool;
+import java.util.Iterator;
 
-import static com.simple.generator.util.StringTool.hasDefalutValue;
+import static com.simple.generator.util.StringTool.isTimestamp;
+import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.*;
 
 /**
  * User: Jfeng
@@ -40,7 +37,7 @@ public class InsertBatchElementGenerator extends AbstractXmlElementGenerator {
         String parameterType = "java.util.List";
         answer.addAttribute(new Attribute("parameterType", parameterType));
 
-        createSelectKey(answer);
+        // createSelectKey(answer);
         createInsertContent(answer);
         createForeach(answer);
 
@@ -70,112 +67,64 @@ public class InsertBatchElementGenerator extends AbstractXmlElementGenerator {
 
     private void createInsertContent(XmlElement answer) {
         StringBuilder insertClause = new StringBuilder();
-
         insertClause.append("insert into ");
         insertClause.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
         insertClause.append(" (");
 
-        boolean isFirstColumn = true;
-        for (IntrospectedColumn column : introspectedTable.getAllColumns()) {
-            // 主键不需要 insert
-            // cannot set values on identity fields
-            if (column.isIdentity()) {
+        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
+        while (iter.hasNext()) {
+            IntrospectedColumn column = iter.next();
+
+            // 主键不需要 insert 过滤有默认值的 更新时间戳
+            if (column.isIdentity() || isTimestamp(column)) {
                 continue;
             }
-
-            // 过滤有默认值的 更新时间戳
-            if (hasDefalutValue(column)) {
-                continue;
+            OutputUtilities.xmlLineAndIndent(insertClause, 4);
+            insertClause.append(getEscapedColumnName(column));
+            if (iter.hasNext()) {
+                insertClause.append(",");
             }
-
-            // 去末尾的逗号和换行符
-            if (isFirstColumn) {
-                isFirstColumn = false;
-            } else {
-                insertClause.append(", ");
-            }
-
-            insertClause.append(MyBatis3FormattingUtilities.getEscapedColumnName(column));
         }
 
+        OutputUtilities.xmlLineAndIndent(insertClause, 2);
         insertClause.append(") values ");
-        OutputUtilities.xmlIndent(insertClause, 4);
         answer.addElement(new TextElement(insertClause.toString()));
     }
 
     protected void createForeach(XmlElement answer) {
-        XmlElement foreach = createForeachXmlElement();
-        addValueElement(foreach);
-        answer.addElement(foreach);
-    }
-
-    private XmlElement createForeachXmlElement() {
         XmlElement foreach = new XmlElement("foreach");
         foreach.addAttribute(new Attribute("collection", "list"));
         foreach.addAttribute(new Attribute("item", "item"));
-        foreach.addAttribute(new Attribute("index", "index"));
-        foreach.addAttribute(new Attribute("open", "("));
-        foreach.addAttribute(new Attribute("close", ")"));
+        // foreach.addAttribute(new Attribute("index", "index"));
+        // foreach.addAttribute(new Attribute("open", "("));
+        // foreach.addAttribute(new Attribute("close", ")"));
         foreach.addAttribute(new Attribute("separator", ","));
-
-        return foreach;
+        addValueElement(foreach);
+        answer.addElement(foreach);
     }
 
     public void addValueElement(XmlElement xmlElement) {
         StringBuilder valueClause = new StringBuilder();
         OutputUtilities.xmlIndent(valueClause, 1);
-
-        List<String> list = new ArrayList<>();
-
-        boolean isFirstColumn = true;
-
-        for (IntrospectedColumn column : introspectedTable.getAllColumns()) {
-            // cannot set values on identity fields
-            if (column.isIdentity()) {
-                continue;
-            }
+        valueClause.append("(");
+        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
+        while (iter.hasNext()) {
+            IntrospectedColumn column = iter.next();
 
             // 过滤有默认值的 更新时间戳
-            if (hasDefalutValue(column)) {
+            if (column.isIdentity() || isTimestamp(column)) {
                 continue;
             }
+            OutputUtilities.xmlLineAndIndent(valueClause, 6);
+            valueClause.append(getParameterForEach(column));
 
-            // 去末尾的逗号和换行符
-            if (isFirstColumn) {
-                isFirstColumn = false;
-            } else {
-                valueClause.append(",\n");
-                OutputUtilities.xmlIndent(valueClause, 4);
-
+            if (iter.hasNext()) {
+                valueClause.append(",");
             }
-
-            valueClause.append(getParameterClause(column));
-
-            // if (iter.hasNext()) {
-            //     value.append(",\n");
-            //     OutputUtilities.xmlIndent(value, 4);
-            // }
         }
 
-        list.add(valueClause.toString());
-
-        for (String clause : list) {
-            xmlElement.addElement(new TextElement(clause));
-        }
-    }
-
-    private String getParameterClause(IntrospectedColumn introspectedColumn) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("#{item.");
-        sb.append(introspectedColumn.getJavaProperty());
-        sb.append(",jdbcType=");
-        sb.append(introspectedColumn.getJdbcTypeName());
-        if (StringUtility.stringHasValue(introspectedColumn.getTypeHandler())) {
-            sb.append(",typeHandler=");
-            sb.append(introspectedColumn.getTypeHandler());
-        }
-
-        sb.append('}');
-        return sb.toString();
+        OutputUtilities.xmlLineAndIndent(valueClause, 4);
+        valueClause.append(")");
+        xmlElement.addElement(new TextElement(valueClause.toString()));
     }
 }

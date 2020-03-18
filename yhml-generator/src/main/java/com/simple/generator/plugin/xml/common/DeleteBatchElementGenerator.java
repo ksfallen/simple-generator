@@ -1,4 +1,4 @@
-package com.simple.generator.xml.common;
+package com.simple.generator.plugin.xml.common;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
@@ -7,18 +7,19 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 
-import com.simple.generator.util.StringTool;
+import static com.simple.generator.plugin.xml.common.XmlStatementId.DELETE_BATCH_IDS;
+import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.*;
 
 /**
  * User: Jfeng
  * Date: 2017/5/25
  */
-public class DeleteByIdsElementGenerator extends AbstractXmlElementGenerator {
+public class DeleteBatchElementGenerator extends AbstractXmlElementGenerator {
 
 
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("delete");
-        answer.addAttribute(new Attribute("id", "deleteByIdList"));
+        answer.addAttribute(new Attribute("id", DELETE_BATCH_IDS));
 
         String parameterType = "java.util.List";
         answer.addAttribute(new Attribute("parameterType", parameterType));
@@ -49,11 +50,9 @@ public class DeleteByIdsElementGenerator extends AbstractXmlElementGenerator {
         sb.append(" in ");
 
         answer.addElement(new TextElement(sb.toString()));
+
         XmlElement foreach = createForeachXmlElement(",");
-
-        String text = StringTool.getParameterClause(column);
-        foreach.addElement(new TextElement(text));
-
+        foreach.addElement(new TextElement(getParameterIn(column)));
         answer.addElement(foreach);
     }
 
@@ -84,12 +83,10 @@ public class DeleteByIdsElementGenerator extends AbstractXmlElementGenerator {
                 sb.append("where ");
                 and = true;
             }
-
-            sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
+            sb.append(getEscapedColumnName(introspectedColumn));
             sb.append(" = ");
-            sb.append(StringTool.getParameterClause(introspectedColumn));
+            sb.append(getParameterIn(introspectedColumn));
         }
-
         return new TextElement(sb.toString());
     }
 
@@ -97,11 +94,10 @@ public class DeleteByIdsElementGenerator extends AbstractXmlElementGenerator {
         XmlElement foreach = new XmlElement("foreach");
         foreach.addAttribute(new Attribute("collection", "list"));
         foreach.addAttribute(new Attribute("item", "item"));
-        foreach.addAttribute(new Attribute("index", "index"));
-        foreach.addAttribute(new Attribute("open", ""));
-        foreach.addAttribute(new Attribute("close", ""));
+        // foreach.addAttribute(new Attribute("index", "index"));
+        foreach.addAttribute(new Attribute("open", "("));
+        foreach.addAttribute(new Attribute("close", ")"));
         foreach.addAttribute(new Attribute("separator", separator));
-
         return foreach;
     }
 

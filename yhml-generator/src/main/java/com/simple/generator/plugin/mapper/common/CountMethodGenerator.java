@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.simple.generator.plugin.mapper;
+package com.simple.generator.plugin.mapper.common;
+
+import com.simple.generator.plugin.xml.common.XmlStatementId;
+import org.mybatis.generator.api.dom.java.*;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.mybatis.generator.api.dom.java.*;
-import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
-
-import com.simple.generator.xml.common.XmlStatementId;
+import static com.simple.generator.plugin.xml.common.XmlStatementId.PARAM_NAME;
 
 /**
  *
@@ -45,7 +46,7 @@ public class CountMethodGenerator extends AbstractJavaMapperMethodGenerator {
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(new FullyQualifiedJavaType("int")); //$NON-NLS-1$
         method.setName(XmlStatementId.COUNT);
-        method.addParameter(new Parameter(fqjt, "record")); //$NON-NLS-1$
+        method.addParameter(new Parameter(fqjt, PARAM_NAME)); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         addMapperAnnotations(method);

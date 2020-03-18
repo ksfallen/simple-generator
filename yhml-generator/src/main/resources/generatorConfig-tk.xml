@@ -54,19 +54,20 @@
             identity="true  @GeneratedValue(strategy = GenerationType.IDENTITY)
         -->
         <!--
-            如果设置为true，生成的model类会直接使用column本身的名字，不再使用驼峰命名方法，
-            比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate
+            useActualColumnNames
+                true:生成的model类会直接使用column本身的名字，不再使用驼峰命名方法
+                      比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate
+                false:生成的model类使用驼峰命名方法
          -->
-        <!--<table tableName="%">
-            <property name="useActualColumnNames" value="true"/>
-            &lt;!&ndash; {0}:tableName {1}: TableName &ndash;&gt;
-            <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>
-        </table>-->
-
-        <table tableName="AppInfo">
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>
+        <table tableName="%">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
+
+        <!--<table tableName="AppInfo">-->
+        <!--    <property name="useActualColumnNames" value="true"/>-->
+        <!--    <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
 
     </context>
 </generatorConfiguration>

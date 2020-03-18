@@ -26,9 +26,10 @@ public class LyqGenerator extends SimplePlusGenerator {
     }
 
     @Override
-    protected void customGenerator(AutoGenerator generator) {
+    protected AutoGenerator customGenerator(AutoGenerator generator) {
         // generator.getDataSource().setTypeConvert(new JavaTypeConvert());
         generator.getTemplate().setController("/generator/controller.java.vm");
+        return generator;
     }
 
 }

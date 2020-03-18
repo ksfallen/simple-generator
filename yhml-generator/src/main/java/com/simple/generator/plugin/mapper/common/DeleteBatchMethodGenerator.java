@@ -13,26 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.simple.generator.plugin.mapper;
+package com.simple.generator.plugin.mapper.common;
 
-import java.util.Set;
-import java.util.TreeSet;
-
+import com.simple.generator.util.FullyJavaTypeUtil;
+import com.simple.generator.plugin.xml.common.XmlStatementId;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 
-import com.simple.generator.xml.common.XmlStatementId;
-
-import static com.simple.generator.util.FullyJavaTypeUtil.listType;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *
  * @author Jeff Butler
  *
  */
-public class ListMethodGenerator extends AbstractJavaMapperMethodGenerator {
+public class DeleteBatchMethodGenerator extends AbstractJavaMapperMethodGenerator implements FullyJavaTypeUtil {
 
-    public ListMethodGenerator() {
+    public DeleteBatchMethodGenerator() {
         super();
     }
 
@@ -45,9 +43,10 @@ public class ListMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
-        method.setReturnType(new FullyQualifiedJavaType("List<" + introspectedTable.getBaseRecordType() + ">")); //$NON-NLS-1$
-        method.setName(XmlStatementId.LIST_BY_CRITERIA);
-        method.addParameter(new Parameter(fqjt, "record")); //$NON-NLS-1$
+        method.setReturnType(new FullyQualifiedJavaType("int")); //$NON-NLS-1$
+        method.setName(XmlStatementId.DELETE_BATCH_IDS);
+        FullyQualifiedJavaType parpmType = new FullyQualifiedJavaType("Collection<? extends Serializable> ");
+        method.addParameter(new Parameter(parpmType, "list")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         addMapperAnnotations(method);
@@ -57,13 +56,13 @@ public class ListMethodGenerator extends AbstractJavaMapperMethodGenerator {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
-
-        interfaze.addImportedType(listType);
     }
 
     public void addMapperAnnotations(Method method) {
     }
 
     public void addExtraImports(Interface interfaze) {
+        interfaze.addImportedType(collection);
+        interfaze.addImportedType(serializable);
     }
 }

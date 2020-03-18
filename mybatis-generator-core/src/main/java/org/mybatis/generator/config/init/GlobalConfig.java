@@ -10,10 +10,8 @@ import lombok.Data;
 public class GlobalConfig {
     private String outputDir;
 
-
     /**
      * 自定义继承的Entity类全称，带包名
-     *
      */
     private String superEntityClass;
 
@@ -28,7 +26,7 @@ public class GlobalConfig {
     private String superServiceClass;
 
     /**
-     *  泛型注入 Mapper<T> mapper
+     * 泛型注入 Mapper<T> mapper
      */
     private boolean genericTypeAutowired;
 
@@ -73,6 +71,9 @@ public class GlobalConfig {
      */
     private String controllerSuffix = "Controller";
 
-    private boolean swagger2;
+    /**
+     * 是否开启文档注解
+     */
+    private boolean swagger2 = false;
 
 }

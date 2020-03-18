@@ -21,8 +21,12 @@ open class ${table.serviceName} : ${superServiceImplClass}<${table.mapperName}, 
 }
 #else
 public class ${table.serviceName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}>{
+  #foreach($item in ${cfg.mapper.entrySet()})
+    #if(${item.key} == ${entity})
     @Autowired
-    private ${table.mapperName} mapper;
+    private ${table.mapper} ${item.value};
+    #end
+  #end
 
     public List<${entity}> listBy(${entity}Query query){
         QueryWrapper<${entity}> wrapper = query(query);

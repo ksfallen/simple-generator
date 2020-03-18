@@ -13,11 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.simple.generator.xml.common;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+package com.simple.generator.plugin.xml.common;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.OutputUtilities;
@@ -25,11 +21,15 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 import org.mybatis.generator.config.GeneratedKey;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import static com.simple.generator.util.StringTool.*;
+import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.*;
 
 /**
  * @author Jfeng
@@ -71,7 +71,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
                 answer.addAttribute(new Attribute("useGeneratedKeys", "true"));
                 answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty()));
             } else {
-                answer.addElement(getSelectKey(introspectedColumn, gk));
+                // answer.addElement(getSelectKey(introspectedColumn, gk));
             }
         }
 
@@ -81,47 +81,35 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         insertClause.append("insert into ");
         insertClause.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());         // 表名
         insertClause.append(" (");
-        valuesClause.append("values (\n");
-        // OutputUtilities.xmlIndent(valuesClause, 4); // 空格
+        valuesClause.append("values (");
+        OutputUtilities.xmlIndent(insertClause, 4); // 空格
 
         List<String> valuesClauses = new ArrayList<>();
         Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
-
-        boolean isFirstColumn = true;
-
         while (iter.hasNext()) {
             IntrospectedColumn column = iter.next();
-
-            // 主键不需要 insert
-            if (column.isIdentity()) {
+            // 主键不需要 insert 过滤有默认值的 更新时间戳 stampDate
+            if (column.isIdentity() || isTimestamp(column)) {
                 continue;
             }
+            OutputUtilities.xmlLineAndIndent(insertClause, 4); // 空格
+            insertClause.append(getEscapedColumnName(column));
 
-            // 过滤有默认值的 更新时间戳 stampDate
-            if (hasDefalutValue(column)) {
-                continue;
+            OutputUtilities.xmlLineAndIndent(valuesClause, 4);
+            String clause = getParameterClauseWithoutJdbcType(column);
+            valuesClause.append(clause);
+
+            if (iter.hasNext()) {
+                insertClause.append(",");
+                valuesClause.append(",");
             }
-
-            // 去末尾的逗号和换行符
-            if (isFirstColumn) {
-                isFirstColumn = false;
-                OutputUtilities.xmlIndent(valuesClause, 4);
-            } else {
-                insertClause.append(", ");
-                valuesClause.append(",\n");
-                OutputUtilities.xmlIndent(valuesClause, 4);
-            }
-
-            insertClause.append(MyBatis3FormattingUtilities.getEscapedColumnName(column));
-            valuesClause.append(MyBatis3FormattingUtilities.getParameterClause(column));
         }
 
-
-        insertClause.append(')');
+        OutputUtilities.xmlLineAndIndent(insertClause, 2);
+        insertClause.append(")");
         answer.addElement(new TextElement(insertClause.toString()));
 
-        valuesClause.append("\n");
-        OutputUtilities.xmlIndent(valuesClause, 3);
+        OutputUtilities.xmlLineAndIndent(valuesClause, 2);
         valuesClause.append(')');
         valuesClauses.add(valuesClause.toString());
 

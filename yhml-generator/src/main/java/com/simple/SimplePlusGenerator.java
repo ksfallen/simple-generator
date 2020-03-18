@@ -58,18 +58,18 @@ public class SimplePlusGenerator {
         delete();
     }
 
-    protected void delete() {
+    private void delete() {
         File file = new File(outputDir);
         FileSystemUtils.deleteRecursively(file);
         file.mkdirs();
     }
 
     protected void generator(List<String> list) {
-        generatorTables(list.toArray(new String[0]));
+        generator(list.toArray(new String[0]));
     }
 
 
-    protected void generatorTables(String... tables) {
+    protected void generator(String... tables) {
         AutoGenerator generator = new SimplAutoGenerator();
 
         GlobalConfig gc = new GlobalConfig();
@@ -134,7 +134,8 @@ public class SimplePlusGenerator {
         return config;
     }
 
-    protected void customGenerator(AutoGenerator generator) {
+    protected AutoGenerator customGenerator(AutoGenerator generator) {
+        return generator;
     }
 
     protected PackageConfig packageConfig(AutoGenerator generator) {
@@ -155,8 +156,7 @@ public class SimplePlusGenerator {
         ds.setUsername(userName);
         ds.setPassword(password);
         ds.setDriverName(driverName);
-        // 类型转换
-        ds.setTypeConvert(new JavaTypeConvert());
+        ds.setTypeConvert(new JavaTypeConvert()); // 类型转换
         ds.setDbType(DbType.MYSQL);
         mpg.setDataSource(ds);
         return ds;
@@ -185,16 +185,18 @@ public class SimplePlusGenerator {
     protected InjectionConfig injectionConfig(AutoGenerator generator) {
         // 自定义返回配置 Map 对象
         InjectionConfig cfg = new SimplInjectionConfig();
-        generator.setCfg(cfg);
 
         // 自定义输出文件
         List<FileOutConfig> focList = new ArrayList<>();
-        cfg.setFileOutConfigList(focList);
 
         // 调整 xml 生成目录
         focList.add(SimpleFileOutConfig.xmlFile(xmlOutputDir));
         focList.add(SimpleFileOutConfig.entityQuery(packageName, outputDir, entityPackage + ".query"));
         focList.add(SimpleFileOutConfig.entityColumn(packageName, outputDir, entityPackage + ".query"));
+
+        cfg.setFileOutConfigList(focList);
+        generator.setCfg(cfg);
+
         return cfg;
     }
 }

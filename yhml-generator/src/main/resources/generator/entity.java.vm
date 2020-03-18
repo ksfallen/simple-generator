@@ -19,6 +19,9 @@ import lombok.*;
 import lombok.experimental.Accessors;
 #end
 
+/**
+ * $!{table.comment}
+ */
 #if(${entityLombokModel})
 ## @Builder
 ## @NoArgsConstructor

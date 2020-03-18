@@ -4,12 +4,10 @@
 <generatorConfiguration>
     <!--<properties resource="config.properties"/>-->
 
-    <context id="app" targetRuntime="com.simple.generator.xml.thin.IntrospectedTableThinImpl" defaultModelType="flat">
+    <context id="app" targetRuntime="com.simple.generator.plugin.xml.thin.IntrospectedTableThinImpl" defaultModelType="flat">
 
         <property name="javaFileEncoding" value="utf-8"/>
 
-        <!-- 代码路径 -->
-        <!--<plugin type="com.simple.generator.plugin.codegen.ProjectPathPlugin"/>-->
         <plugin type="com.simple.generator.plugin.model.EntityPlugin"/>
         <plugin type="com.simple.generator.plugin.mapper.MapperGeneratorPlugin"/>
         <plugin type="com.simple.generator.plugin.codegen.ServicePlugin"/>
@@ -45,6 +43,20 @@
             useActualColumnNames = "true" 生成的model类会直接使用column本身的名字，
             identity="true  @GeneratedValue(strategy = GenerationType.IDENTITY)
         -->
+        <!--
+            tableName %  匹配数据库表
+                      t% 模糊匹配数据库表
+            domainObjectRenamingRule searchString 匹配表前缀,替换为空, 实体名
+            columnRenamingRule searchString 匹配表前缀,替换为空
+            generatedKey column="{0}Id" mysql主键, xxxId {0}:tableName(小写开头) {1}: TableName(大写开头)
+                         column="id"  匹配数据库自增主键
+         -->
+        <table tableName="check_mistake">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+            <!--<domainObjectRenamingRule searchString="^op_freebus" replaceString=""/>-->
+        </table>
+
         <!-- {0}:tableName {1}: TableName -->
         <!--<table tableName="UserInfo">-->
         <!--    <property name="useActualColumnNames" value="true"/>-->
@@ -55,11 +67,6 @@
         <!--    <property name="useActualColumnNames" value="true"/>-->
         <!--    <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-
-        <table tableName="dwd_channel_order">
-            <property name="useActualColumnNames" value="false"/>
-            <!--<domainObjectRenamingRule searchString="^op_freebus" replaceString=""/>-->
-        </table>
 
         <!--<table tableName="t%">-->
         <!--    <property name="useActualColumnNames" value="false"/>-->

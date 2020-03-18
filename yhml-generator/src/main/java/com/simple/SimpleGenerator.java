@@ -1,5 +1,8 @@
 package com.simple;
 
+import com.simple.generator.util.StringTool;
+import org.junit.Before;
+import org.junit.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
@@ -9,69 +12,92 @@ import org.mybatis.generator.config.init.PackageConfig;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.springframework.util.Assert;
 
-import com.simple.generator.util.StringTool;
-
 /**
  * mybatis Generator
  */
-public class SimpleGenerator {
+public class SimpleGenerator extends SimplePlusGenerator {
 
-    public static MyBatisGenerator myBatisGenerator;
+    @Before
+    public void before() {
+        super.before();
+    }
 
+    @Test
+    public void generatorByTKXml() {
+        String xml = "generatorConfig-tk.xml";
+        initConfig();
+        GlobalConfig gc = ContextConfig.getGlobalConfig();
+        gc.setSuperServiceClass("com.simple.generator.base.thin.BaseService");
+        gc.setSuperEntityClass("com.simple.common.base.bean.BaseParamBean");
+        gc.setSuperMapperClass("com.simple.common.base.BaseMapper");
+        run(xml);
+    }
 
-    public static void main(String[] args) throws Exception {
-        String dirver = "com.mysql.jdbc.Driver";
-        // String url ="jdbc:mysql://127.0.0.1:3306/simple?characterEncoding=utf-8&useSSL=false";
-        // String user = "root";
-        // String passwd = "root";
+    @Test
+    public void generatorByExample() {
+        String xml = "generatorConfig-example.xml";
+        initConfig();
+        run(xml);
+    }
+    /**
+     * 生成带有sql的xml文件
+     */
+    @Test
+    public void generatorByXml() {
+        String xml = "generatorConfig.xml";
+        initConfig();
+        run(xml);
+    }
 
-        String url ="jdbc:mysql://172.31.254.147:3306/sit_free_bus?characterEncoding=UTF-8&tinyInt1isBit=false";
-        String user = "opfm";
-        String passwd = "Allcityg0-_";
-
-        url ="jdbc:mysql://10.0.0.103:3306/metro_settlement?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false";
-        user = "tdw";
-        passwd = "happy";
-
-        String generatorConfigXml = "generatorConfig.xml";
-        // String generatorConfigXml = "generatorConfig-tk.xml";
-        // String generatorConfigXml = "generatorConfig-example.xml";
-
+    protected void initConfig() {
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("code2/demo");
-        // gc.setSuperServiceClass("com.simple.generator.base.thin.BaseService");
-        // gc.setSuperEntityClass("com.simple.common.base.bean.BaseParamBean");
-        // gc.setSuperMapperClass("com.simple.common.base.BaseMapper");
-        gc.setSuportServiceInterface(true);
+        gc.setOutputDir(outputDir);
+        // gc.setSuportServiceInterface(false);
         // gc.setGenericTypeAutowired(true);
-        gc.setMapperSuffix("Dao");
-        gc.setSwagger2(true);
         ContextConfig.setGlobalConfig(gc);
 
         PackageConfig pc = new PackageConfig();
-        // pc.setPackageName("com.yhml.demo");
-        pc.setPackageName("com.citytsm.operationplatform.site");
-        pc.setMapper("com.citytsm.op.freebus.dao");
-        pc.setEntity("com.citytsm.op.freebus.entity.model");
+        pc.setPackageName(packageName);
+        pc.setEntity(packageName + "." + entityPackage);
+        pc.setMapper(packageName + "." + mapperPackage);
+        pc.setService(packageName + "." + servicePackage);
         ContextConfig.setPackageConfig(pc);
 
-        ConfigurationParser cp = new ConfigurationParser();
-        Configuration config = cp.parseConfiguration(SimpleGenerator.class.getClassLoader().getResourceAsStream(generatorConfigXml));
-        Context context = config.getContext("app");
-        context.getJdbcConnectionConfiguration().setUserId(user);
-        context.getJdbcConnectionConfiguration().setPassword(passwd);
-        context.getJdbcConnectionConfiguration().setDriverClass(dirver);
-        context.getJdbcConnectionConfiguration().setConnectionURL(url);
-        context.getJdbcConnectionConfiguration().addProperty("remarksReporting", "true");
-
-        initContext(gc, pc, context);
-
-        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config);
-        myBatisGenerator.generate(null);
+        customConfig();
     }
 
+    private void run(String xml) {
+        try {
+            ConfigurationParser cp = new ConfigurationParser();
+            Configuration config = cp.parseConfiguration(SimpleGenerator.class.getClassLoader().getResourceAsStream(xml));
+            Context context = config.getContext("app");
+            context.getJdbcConnectionConfiguration().setUserId(userName);
+            context.getJdbcConnectionConfiguration().setPassword(password);
+            context.getJdbcConnectionConfiguration().setDriverClass(driverName);
+            context.getJdbcConnectionConfiguration().setConnectionURL(url);
+            context.getJdbcConnectionConfiguration().addProperty("remarksReporting", "true");
 
-    private static void initContext(GlobalConfig gc, PackageConfig pc, Context context) {
+            GlobalConfig gc = ContextConfig.getGlobalConfig();
+            PackageConfig pc = ContextConfig.getPackageConfig();
+            initContext(gc, pc, context);
+
+            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config);
+            ContextConfig.setMyBatisGenerator(myBatisGenerator);
+            myBatisGenerator.generate(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 更新配置信息
+     */
+    protected void customConfig() {
+        // GlobalConfig globalConfig = ContextConfig.getGlobalConfig();
+        // PackageConfig packageConfig = ContextConfig.getPackageConfig();
+    }
+
+    public static void initContext(GlobalConfig gc, PackageConfig pc, Context context) {
         String targetProject = gc.getOutputDir();
 
         if (StringTool.isNotBlank(targetProject)) {
@@ -88,7 +114,6 @@ public class SimpleGenerator {
         context.getJavaModelGeneratorConfiguration().setTargetPackage(pc.getEntity());
         context.getJavaClientGeneratorConfiguration().setTargetPackage(pc.getMapper());
         context.getSqlMapGeneratorConfiguration().setTargetPackage(pc.getXml());
-
     }
 
 }

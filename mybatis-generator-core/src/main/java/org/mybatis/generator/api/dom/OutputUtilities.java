@@ -15,10 +15,10 @@
  */
 package org.mybatis.generator.api.dom;
 
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+
 import java.util.Set;
 import java.util.TreeSet;
-
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
 /**
  * The Class OutputUtilities.
@@ -48,7 +48,7 @@ public class OutputUtilities {
     /**
      * Utility method that indents the buffer by the default amount for Java
      * (four spaces per indent level).
-     * 
+     *
      * @param sb
      *            a StringBuilder to append to
      * @param indentLevel
@@ -63,7 +63,7 @@ public class OutputUtilities {
     /**
      * Utility method that indents the buffer by the default amount for XML (two
      * spaces per indent level).
-     * 
+     *
      * @param sb
      *            a StringBuilder to append to
      * @param indentLevel
@@ -76,8 +76,20 @@ public class OutputUtilities {
     }
 
     /**
+     * 换行 + 空格
+     * @param sb
+     * @param indentLevel
+     */
+    public static void xmlLineAndIndent(StringBuilder sb, int indentLevel) {
+        sb.append("\n");
+        for (int i = 0; i < indentLevel; i++) {
+            sb.append("  "); //$NON-NLS-1$
+        }
+    }
+
+    /**
      * Utility method. Adds a newline character to a StringBuilder.
-     * 
+     *
      * @param sb
      *            the StringBuilder to be appended to
      */

@@ -5,7 +5,6 @@
 #if(${enableCache})
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
-
 #end
 #if(${baseResultMap})
     <!-- 通用查询映射结果 -->
@@ -16,7 +15,7 @@
 #end
 #end
 #foreach($field in ${table.commonFields})##生成公共字段
-    <result column="${field.name}" property="${field.propertyName}" />
+        <result column="${field.name}" property="${field.propertyName}" />
 #end
 #foreach($field in ${table.fields})
 #if(!${field.keyFlag})##生成普通字段

@@ -1,7 +1,6 @@
-package com.simple.generator.xml.common;
+package com.simple.generator.plugin.xml.common;
 
-import java.sql.Types;
-
+import com.simple.generator.util.StringTool;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
@@ -9,7 +8,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 
-import com.simple.generator.util.StringTool;
+import java.sql.Types;
 
 /**
  * User: Jfeng
@@ -36,7 +35,6 @@ public class UpdateBatchElementGenerator extends AbstractXmlElementGenerator {
         foreach.addElement(getUpdateContent());
         foreach.addElement(getSetElement());
         foreach.addElement(getWhereContent());
-
         answer.addElement(foreach);
     }
 
@@ -102,9 +100,9 @@ public class UpdateBatchElementGenerator extends AbstractXmlElementGenerator {
         XmlElement foreach = new XmlElement("foreach");
         foreach.addAttribute(new Attribute("collection", "list"));
         foreach.addAttribute(new Attribute("item", "item"));
-        foreach.addAttribute(new Attribute("index", "index"));
-        foreach.addAttribute(new Attribute("open", ""));
-        foreach.addAttribute(new Attribute("close", ""));
+        // foreach.addAttribute(new Attribute("index", "index"));
+        // foreach.addAttribute(new Attribute("open", ""));
+        // foreach.addAttribute(new Attribute("close", ""));
         foreach.addAttribute(new Attribute("separator", ";"));
 
         return foreach;

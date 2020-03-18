@@ -20,6 +20,17 @@ public interface FullyJavaTypeUtil {
     String _Tosirng  = "@ToString";
     FullyQualifiedJavaType tostring = new FullyQualifiedJavaType("lombok.ToString");
 
+    String _Data  = "@Data";
+    FullyQualifiedJavaType data = new FullyQualifiedJavaType("lombok.Data");
+
+    String _Accessors  = "@Accessors(chain = true)";
+    FullyQualifiedJavaType accessors = new FullyQualifiedJavaType("lombok.experimental.Accessors");
+
+    String _EqualsAndHashCode  = "@EqualsAndHashCode(callSuper = true)";
+    FullyQualifiedJavaType equalsAndHashCode = new FullyQualifiedJavaType("lombok.EqualsAndHashCode");
+
+    FullyQualifiedJavaType equalsAndHashCodeta = new FullyQualifiedJavaType("lombok.EqualsAndHashCode");
+
     String _Slf4j  = "@Slf4j";
     FullyQualifiedJavaType slf4j = new FullyQualifiedJavaType("lombok.extern.slf4j.Slf4j");
 
@@ -29,6 +40,8 @@ public interface FullyJavaTypeUtil {
     FullyQualifiedJavaType arrays = new FullyQualifiedJavaType("java.util.Arrays");
     FullyQualifiedJavaType optional = new FullyQualifiedJavaType("java.util.Optional");
     FullyQualifiedJavaType listType = new FullyQualifiedJavaType("java.util.List");
+    FullyQualifiedJavaType serializable = new FullyQualifiedJavaType("java.io.Serializable");
+    FullyQualifiedJavaType collection = new FullyQualifiedJavaType("java.util.Collection");
 
     String _Autowired  = "@Autowired";
     FullyQualifiedJavaType autowired = new FullyQualifiedJavaType("org.springframework.beans.factory.annotation.Autowired");

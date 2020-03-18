@@ -1,20 +1,16 @@
 package com.simple.generator.plugin.model;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
+import com.simple.generator.util.StringTool;
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
-import org.springframework.util.FileSystemUtils;
 
-import com.simple.generator.util.StringTool;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.simple.generator.util.FullyJavaTypeUtil.*;
 
@@ -37,9 +33,9 @@ public class EntityPlugin extends PluginAdapter {
     private void initPath() {
         String directory = gc.getOutputDir();
 
-        File file = new File(directory);
-        FileSystemUtils.deleteRecursively(file);
-        file.mkdirs();
+        // File file = new File(directory);
+        // FileSystemUtils.deleteRecursively(file);
+        // file.mkdirs();
 
         // context.getJavaModelGeneratorConfiguration().setTargetPackage(pc.getEntity());
         // context.getJavaClientGeneratorConfiguration().setTargetPackage(pc.getMapper());
@@ -85,9 +81,7 @@ public class EntityPlugin extends PluginAdapter {
 
             topLevelClass.getFields().forEach(field -> {
                 String value = map.get(field.getName());
-
                 if (StringTool.hasValue(value)) {
-                    // value = field.getName();
                     field.addAnnotation(StringTool.format(_ApiModelProperty, value));
                 }
             });
@@ -99,16 +93,15 @@ public class EntityPlugin extends PluginAdapter {
     private void addAnnotation(TopLevelClass topLevelClass) {
         topLevelClass.getMethods().clear();
 
-        topLevelClass.addAnnotation(_Getter);
-        topLevelClass.addImportedType(getter);
+        topLevelClass.addAnnotation(_Data);
+        topLevelClass.addImportedType(data);
 
-        topLevelClass.addAnnotation(_Setter);
-        topLevelClass.addImportedType(setter);
+        topLevelClass.addAnnotation(_Accessors);
+        topLevelClass.addImportedType(accessors);
 
-        if (topLevelClass.getSuperClass() == null) {
-            topLevelClass.addAnnotation(_Tosirng);
-            topLevelClass.addImportedType(tostring);
+        if (topLevelClass.getSuperClass() != null) {
+            topLevelClass.addAnnotation(_EqualsAndHashCode);
+            topLevelClass.addImportedType(equalsAndHashCodeta);
         }
-
     }
 }

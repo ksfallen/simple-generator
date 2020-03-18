@@ -1,5 +1,7 @@
 package org.mybatis.generator.config.init;
 
+import org.mybatis.generator.api.MyBatisGenerator;
+
 /**
  * @author: Jfeng
  * @date: 2019-05-30
@@ -9,6 +11,8 @@ public class ContextConfig {
     private GlobalConfig globalConfig;
 
     private PackageConfig packageConfig;
+
+    private MyBatisGenerator myBatisGenerator;
 
     public static GlobalConfig getGlobalConfig() {
         return ThreadContext.get("gc");
@@ -24,5 +28,13 @@ public class ContextConfig {
 
     public static void setPackageConfig(PackageConfig config) {
         ThreadContext.put("pc", config);
+    }
+
+    public static MyBatisGenerator getMyBatisGenerator() {
+        return ThreadContext.get("myBatisGenerator");
+    }
+
+    public static void setMyBatisGenerator(MyBatisGenerator myBatisGenerator) {
+        ThreadContext.put("myBatisGenerator", myBatisGenerator);
     }
 }

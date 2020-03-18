@@ -16,11 +16,6 @@
 
         <property name="javaFileEncoding" value="utf-8"/>
 
-        <!-- ´úÂëÂ·¾¶ -->
-        <plugin type="com.simple.generator.plugin.codegen.ProjectPathPlugin">
-            <property name="packageName" value="${package.name}"/>
-        </plugin>
-
         <plugin type="com.simple.generator.plugin.mapper.MapperGeneratorPlugin">
             <property name="mappers" value="${mapper.rootClass}"/>
             <property name="caseSensitive" value="true"/>
@@ -98,7 +93,7 @@
 
         <table tableName="%" >
             <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="{0}Id" sqlStatement="Mysql" identity="true"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
 
     </context>

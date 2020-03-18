@@ -1,16 +1,13 @@
 package com.simple.generator.plugin.codegen;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.*;
-import org.springframework.util.FileSystemUtils;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.simple.generator.util.FullyJavaTypeUtil.*;
 import static com.yhml.core.util.StringUtil.toLowerCaseFirst;
@@ -42,7 +39,6 @@ public class ServicePlugin extends PluginAdapter {
         // service 包名
         this.targetPackage = pc.getService();
         this.rootClass = gc.getSuperServiceClass();
-
         return true;
     }
 
@@ -68,7 +64,6 @@ public class ServicePlugin extends PluginAdapter {
         if (gc.isSuportServiceInterface()) {
             addServceInterface(topLevelClass, files);
         }
-
 
         return files;
     }
@@ -99,11 +94,11 @@ public class ServicePlugin extends PluginAdapter {
     protected void addService(TopLevelClass topLevelClass, IntrospectedTable introspectedTable, List<GeneratedJavaFile> files) {
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
 
+        addLogger(topLevelClass);
+
         addImport(topLevelClass);
 
         addMapper(topLevelClass);
-
-        addLogger(topLevelClass);
 
         // 生成文件
         files.add(new GeneratedJavaFile(topLevelClass, targetProject, fileEncoding, context.getJavaFormatter()));

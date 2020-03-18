@@ -1,11 +1,11 @@
-package com.simple.generator.xml.common;
+package com.simple.generator.plugin.xml.common;
 
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByPrimaryKeyElementGenerator;
 
-import static com.simple.generator.xml.common.XmlStatementId.BASE_SELECT_SQL;
+import static com.simple.generator.plugin.xml.common.XmlStatementId.BASE_SELECT_SQL;
 
 /**
  * 查询条件

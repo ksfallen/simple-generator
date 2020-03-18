@@ -1,13 +1,13 @@
 package com.simple.generator.plugin.model;
 
-import java.sql.Types;
-import java.util.Objects;
-import java.util.Properties;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
 import org.mybatis.generator.internal.util.StringUtility;
+
+import java.sql.Types;
+import java.util.Objects;
+import java.util.Properties;
 
 public class JavaTypeResolver extends JavaTypeResolverDefaultImpl {
 
@@ -20,6 +20,7 @@ public class JavaTypeResolver extends JavaTypeResolverDefaultImpl {
 
         //  强制 DECIMAL 转 double
         // typeMap.put(Types.DECIMAL, new JdbcTypeInformation("DOUBLE", new FullyQualifiedJavaType(Double.class.getName())));
+
 
         //  强制 date 转 String
         if (forceDateTime2String) {
@@ -48,7 +49,7 @@ public class JavaTypeResolver extends JavaTypeResolverDefaultImpl {
                 }
                 break;
             case Types.BIGINT:
-                answer = new FullyQualifiedJavaType(Integer.class.getName());
+                answer = new FullyQualifiedJavaType(Long.class.getName());
                 break;
             default:
                 answer = jdbcTypeInformation.getFullyQualifiedJavaType();

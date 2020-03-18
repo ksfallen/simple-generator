@@ -1,4 +1,4 @@
-package com.simple.generator.java.elements;
+package com.simple.generator.plugin.mapper.common;
 
 import java.util.List;
 import java.util.Set;

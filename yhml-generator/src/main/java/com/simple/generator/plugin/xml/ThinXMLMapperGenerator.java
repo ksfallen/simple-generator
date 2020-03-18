@@ -1,6 +1,7 @@
-package com.simple.generator.xml;
+package com.simple.generator.plugin.xml;
 
-import com.simple.generator.xml.common.*;
+import com.simple.generator.plugin.xml.common.*;
+import com.simple.generator.plugin.xml.common.SelectByPrimaryKeyForUpdateElementGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
@@ -12,7 +13,7 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SimpleSelectByP
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
- * xml 生成类
+ * xml 带有基本的sql语句
  */
 public class ThinXMLMapperGenerator extends XMLMapperGenerator {
 
@@ -47,9 +48,9 @@ public class ThinXMLMapperGenerator extends XMLMapperGenerator {
 
 
         // 批量处理方法
-        // addInsertBatch(answer);
+        addInsertBatch(answer);
         // addUpdateBatch(answer);
-        // addDeleteByIds(answer);
+        addDeleteByIds(answer);
 
         return answer;
     }
@@ -118,7 +119,7 @@ public class ThinXMLMapperGenerator extends XMLMapperGenerator {
 
     protected void addDeleteByIds(XmlElement parentElement) {
         if (introspectedTable.getRules().generateBaseColumnList()) {
-            AbstractXmlElementGenerator elementGenerator = new DeleteByIdsElementGenerator();
+            AbstractXmlElementGenerator elementGenerator = new DeleteBatchElementGenerator();
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }
@@ -137,7 +138,11 @@ public class ThinXMLMapperGenerator extends XMLMapperGenerator {
             AbstractXmlElementGenerator elementGenerator = new UpdateElementGenerator();
             this.initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
+    }
 
+    protected void addSelectByPrimaryKeyForUpdateElement(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new SelectByPrimaryKeyForUpdateElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
     }
 
 }

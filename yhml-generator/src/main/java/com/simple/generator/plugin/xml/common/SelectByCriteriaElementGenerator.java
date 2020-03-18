@@ -1,10 +1,10 @@
-package com.simple.generator.xml.common;
+package com.simple.generator.plugin.xml.common;
 
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 
-import static com.simple.generator.xml.common.XmlStatementId.LIST_BY_CRITERIA;
+import static com.simple.generator.plugin.xml.common.XmlStatementId.LIST_BY_CRITERIA;
 
 /**
  * list 结果查询

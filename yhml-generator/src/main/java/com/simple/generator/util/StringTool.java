@@ -1,22 +1,23 @@
 package com.simple.generator.util;
 
-import java.sql.Types;
-import java.text.MessageFormat;
-import java.util.List;
-
+import com.yhml.core.util.StringUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.internal.util.StringUtility;
 
-import com.yhml.core.util.StringUtil;
+import java.sql.Types;
+import java.text.MessageFormat;
+import java.util.List;
 
 
 /**
  * User: Jfeng
  * Date:  2017/6/8
  */
+@Slf4j
 public class StringTool {
 
 
@@ -52,33 +53,14 @@ public class StringTool {
     }
 
     /**
-     * @param column
-     * @param isBatchInsert
-     * @return
-     */
-    public static String getParameterClause(IntrospectedColumn column) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("#{item");
-        sb.append(",jdbcType=");
-        sb.append(column.getJdbcTypeName());
-        if (StringUtility.stringHasValue(column.getTypeHandler())) {
-            sb.append(",typeHandler=");
-            sb.append(column.getTypeHandler());
-        }
-
-        sb.append('}');
-        return sb.toString();
-    }
-
-
-    /**
      * timestamp 字段并且有默认值
      *
      * @param column
      * @return
      */
-    public static boolean hasDefalutValue(IntrospectedColumn column) {
-        return column.getJdbcType() == Types.TIMESTAMP && StringTool.isNotBlank(column.getDefaultValue());
+    public static boolean isTimestamp(IntrospectedColumn column) {
+        String value = column.getDefaultValue();
+        return column.getJdbcType() == Types.TIMESTAMP && StringUtils.equals("CURRENT_TIMESTAMP", value);
     }
 
     /**
@@ -103,12 +85,12 @@ public class StringTool {
             // 格式化主键 {0}Id {0}:tableName {1}: TableName
             String tableName = table.getFullyQualifiedTableNameAtRuntime();
             String generatedKeyColumn = MessageFormat.format(gk.getColumn(), StringUtil.toLowerCaseFirst(tableName), tableName);
-            IntrospectedColumn introspectedColumn = table.getColumn(generatedKeyColumn);
+            column = table.getColumn(generatedKeyColumn);
 
             // 没有符合的主键策略 单一主键
-            if (introspectedColumn == null) {
+            if (column == null) {
                 List<IntrospectedColumn> columns = table.getPrimaryKeyColumns();
-                introspectedColumn = columns.isEmpty() ? null : columns.get(0);
+                column = columns.isEmpty() ? null : columns.get(0);
             }
         }
 
