@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
+
+import cn.hutool.core.util.ArrayUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.PreparedStatement;
@@ -29,14 +31,19 @@ public class SimplAutoGenerator extends AutoGenerator {
 
     @Override
     public void execute() {
-        log.info("==========================准备生成文件...==========================");
+        log.info("========================== 准备生成文件 ==========================");
+
         beforeConfigBuilder();
+
 
         if (null == this.config) {
             this.config = new ConfigBuilder(super.getPackageInfo(), getDataSource(), getStrategy(), getTemplate(), getGlobalConfig());
             this.injectionConfig.setConfig(this.config);
-
         }
+
+        this.config.getPathInfo().forEach((key, value) -> {
+            log.info("创建目录: [" + value + "]");
+        });
 
         AbstractTemplateEngine templateEngine = getTemplateEngine();
         if (null == templateEngine) {
@@ -45,7 +52,7 @@ public class SimplAutoGenerator extends AutoGenerator {
 
         templateEngine.init(this.pretreatmentConfigBuilder(this.config)).mkdirs().batchOutput().open();
 
-        log.info("==========================文件生成完成！！！==========================");
+        log.info("========================== 文件生成完成 ==========================");
     }
 
     @Override
@@ -79,6 +86,7 @@ public class SimplAutoGenerator extends AutoGenerator {
         AutoGenerator generator = this;
 
         String[] include = generator.getStrategy().getInclude();
+        boolean allTables = ArrayUtil.isEmpty(include);
         Set<String> tables = Arrays.stream(include).collect(Collectors.toSet());
 
         List<Pattern> patterns = new ArrayList<>();
@@ -101,6 +109,10 @@ public class SimplAutoGenerator extends AutoGenerator {
             String tableName;
             while (results.next()) {
                 tableName = results.getString(dbQuery.tableName());
+                if (allTables) {
+                    tables.add(tableName);
+                    continue;
+                }
                 for (Pattern pattern : patterns) {
                     Matcher matcher = pattern.matcher(tableName);
                     if (matcher.lookingAt()) {
@@ -114,7 +126,7 @@ public class SimplAutoGenerator extends AutoGenerator {
                 generator.getStrategy().setInclude(tables.toArray(new String[0]));
             }
         } catch (SQLException e) {
-            log.error("", e);
+            log.error("sql exception", e);
         } finally {
             if (preparedStatement != null) {
                 try {

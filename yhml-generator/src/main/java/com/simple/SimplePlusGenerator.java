@@ -58,7 +58,7 @@ public class SimplePlusGenerator {
         delete();
     }
 
-    private void delete() {
+    public void delete() {
         File file = new File(outputDir);
         FileSystemUtils.deleteRecursively(file);
         file.mkdirs();

@@ -17,7 +17,9 @@ public class SimplInjectionConfig extends InjectionConfig {
 
     @Override
     public void initMap() {
+        // 设置 在Service类中注入mapper对象的变量名
         map.put("mapper", Maps.newHashMap());
+        // 设置 在Controller类中注入mapper对象的变量名
         map.put("service", Maps.newHashMap());
 
         ConfigBuilder config = this.getConfig();

@@ -11,7 +11,7 @@ import ${package.Mapper}.${table.mapperName};
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * $!{table.comment} Service
+ * $!{table.comment}
  */
 @Slf4j
 @Service

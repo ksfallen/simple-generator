@@ -22,7 +22,7 @@ public class LyqGenerator extends SimplePlusGenerator {
     public void generatorAll() {
         // String[] tableName = {"sys_%"};
         String[] tableName = {"sys_user"};
-        generatorTables(tableName);
+        generator(tableName);
     }
 
     @Override
