@@ -12,14 +12,14 @@ public class TklcGenerator extends SimpleGenerator {
         super.before();
 
         // ------------ ace-account ----------------- //
-        // url = "jdbc:mysql://10.0.0.103:3306/nanjing_settlement?characterEncoding=UTF-8&tinyInt1isBit=false";
-        // userName = "tdw";
-        // password = "happy";
+        url = "jdbc:mysql://10.0.0.103:3306/nanjing_settlement?characterEncoding=UTF-8&tinyInt1isBit=false";
+        userName = "tdw";
+        password = "happy";
 
         // ------------ ace ----------------- //
-        url = "jdbc:mysql://10.0.0.106:3306/ace_royalty?characterEncoding=UTF-8&tinyInt1isBit=false";
-        userName = "bm";
-        password = "Citytsm0";
+        // url = "jdbc:mysql://10.0.0.106:3306/ace_voucher?characterEncoding=UTF-8&tinyInt1isBit=false";
+        // userName = "bm";
+        // password = "Citytsm0";
 
         // ------------ ace-benefit ----------------- //
         // url = "jdbc:mysql://10.0.0.10:3306/ace_benefit?characterEncoding=UTF-8&tinyInt1isBit=false";
@@ -34,7 +34,7 @@ public class TklcGenerator extends SimpleGenerator {
         // entityPackage = "entity.model";  // 父包名如果为空，子包名必须写全部， 否则就只需写子包名
         // mapperPackage = "dao";
 
-        packageName = "com.citytsm.ace.royalty";
+        packageName = "com.citytsm.ace.voucher";
         entityPackage = "dal.entity";  // 父包名如果为空，子包名必须写全部， 否则就只需写子包名
         mapperPackage = "dal.mapper";
         servicePackage = "dal.manager";
