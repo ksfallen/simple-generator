@@ -1,0 +1,8 @@
+;生产从库
+[rs0]
+url = jdbc:mysql://10.0.0.219:13207/receipt_service_eldv_0000?characterEncoding=UTF-8
+username = tdw_read
+password = Dl465gRRqbFgpt8xHLQL
+readOnly = false
+
+

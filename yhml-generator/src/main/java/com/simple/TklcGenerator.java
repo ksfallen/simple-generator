@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class TklcGenerator extends SimpleGenerator {
 
@@ -11,24 +14,20 @@ public class TklcGenerator extends SimpleGenerator {
     public void before() {
         super.before();
 
-        // ------------ ace-account ----------------- //
-        url = "jdbc:mysql://10.0.0.103:3306/nanjing_settlement?characterEncoding=UTF-8&tinyInt1isBit=false";
+        // ------------ 10.0.0.103 ----------------- //
+        url = "jdbc:mysql://10.0.0.103:3306/ebus_bms?characterEncoding=UTF-8&tinyInt1isBit=false";
         userName = "tdw";
         password = "happy";
 
-        // ------------ ace ----------------- //
+        // ------------ 10.0.0.106 ----------------- //
         // url = "jdbc:mysql://10.0.0.106:3306/ace_voucher?characterEncoding=UTF-8&tinyInt1isBit=false";
         // userName = "bm";
         // password = "Citytsm0";
 
-        // ------------ ace-benefit ----------------- //
-        // url = "jdbc:mysql://10.0.0.10:3306/ace_benefit?characterEncoding=UTF-8&tinyInt1isBit=false";
-        // userName = "bm";
-        // password = "Citytsm0";
 
-        // ------------ site ----------------- //
-        // url = "jdbc:mysql://172.31.254.147:3306/sit_site?characterEncoding=UTF-8&tinyInt1isBit=false";
-        // userName = "opfm";
+        // ------------ 10.0.0.147 ----------------- //
+        // url = "jdbc:mysql://10.0.0.147:3306/sit_site?characterEncoding=UTF-8&tinyInt1isBit=false";
+        // userName = "ceshi";
         // password = "Allcityg0-_";
         // packageName = "com.citytsm.operationplatform.site.activity";
         // entityPackage = "entity.model";  // 父包名如果为空，子包名必须写全部， 否则就只需写子包名
@@ -42,12 +41,12 @@ public class TklcGenerator extends SimpleGenerator {
 
     @Test
     public void generatorAll() {
-        // List<String> list = new ArrayList<>();
-        // list.add("check_batch");
-        // list.add("check_mistake");
-        // list.add("dwd_channel_order");
-        // list.add("dwd_trans_info");
-        generator();
+        List<String> list = new ArrayList<>();
+        list.add("line");
+        list.add("line_batch");
+        list.add("station");
+        list.add("train");
+        generator(list);
         // generatorByXml();
     }
 

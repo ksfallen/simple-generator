@@ -31,11 +31,24 @@
             <artifactId>yhml-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sun</groupId>
-            <artifactId>tools</artifactId>
-            <scope>system</scope>
-            <systemPath>${java.home}/../lib/tools.jar</systemPath>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>com.sun</groupId>-->
+        <!--    <artifactId>tools</artifactId>-->
+        <!--    <scope>system</scope>-->
+        <!--    <systemPath>${java.home}/../lib/tools.jar</systemPath>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.mybatis.generator</groupId>
